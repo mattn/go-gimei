@@ -61,7 +61,9 @@ golang
 
 ## Installation
 
-go get github.com/mattn/go-gimei
+```
+$ go get github.com/mattn/go-gimei
+```
 
 ## License
 
