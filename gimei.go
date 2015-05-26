@@ -128,8 +128,9 @@ func NewFemale() *Name {
 	}
 }
 
-func FindByKanji(name string) *Name {
-	token := strings.SplitN(name, " ", 2)
+func findNameByIndex(n string, i int) *Name {
+	onceName.Do(loadNames)
+	token := strings.SplitN(n, " ", 2)
 	if len(token) != 2 {
 		return nil
 	}
@@ -138,7 +139,7 @@ func FindByKanji(name string) *Name {
 			continue
 		}
 		for _, first := range names.FirstName.Male {
-			if first.Kanji() != token[1] {
+			if first[i] != token[1] {
 				continue
 			}
 			return &Name{
@@ -148,7 +149,7 @@ func FindByKanji(name string) *Name {
 			}
 		}
 		for _, first := range names.FirstName.Female {
-			if first.Kanji() != token[1] {
+			if first[i] != token[1] {
 				continue
 			}
 			return &Name{
@@ -161,18 +162,30 @@ func FindByKanji(name string) *Name {
 	return nil
 }
 
+func FindNameByKanji(name string) *Name {
+	return findNameByIndex(name, 0)
+}
+
+func FindNameByHiragana(name string) *Name {
+	return findNameByIndex(name, 1)
+}
+
+func FindNameByKatakana(name string) *Name {
+	return findNameByIndex(name, 2)
+}
+
 type address struct {
 	Addresses struct {
 		Prefecture []Item `yaml:"prefecture"`
-		Town       []Item `yaml:"town"`
 		City       []Item `yaml:"city"`
+		Town       []Item `yaml:"town"`
 	} `yaml:"addresses"`
 }
 
 type Address struct {
 	Prefecture Item
-	Town       Item
 	City       Item
+	Town       Item
 }
 
 func loadAddresses() {
@@ -195,22 +208,22 @@ func (a *Address) String() string {
 }
 
 func (a *Address) Kanji() string {
-	return a.Prefecture.Kanji() + a.Town.Kanji() + a.City.Kanji()
+	return a.Prefecture.Kanji() + a.City.Kanji() + a.Town.Kanji()
 }
 
 func (a *Address) Hiragana() string {
-	return a.Prefecture.Hiragana() + a.Town.Hiragana() + a.City.Hiragana()
+	return a.Prefecture.Hiragana() + a.City.Hiragana() + a.Town.Hiragana()
 }
 
 func (a *Address) Katakana() string {
-	return a.Prefecture.Katakana() + a.Town.Katakana() + a.City.Katakana()
+	return a.Prefecture.Katakana() + a.City.Katakana() + a.Town.Katakana()
 }
 
 func NewAddress() *Address {
 	return &Address{
 		Prefecture: NewPrefecture(),
-		Town:       NewTown(),
 		City:       NewCity(),
+		Town:       NewTown(),
 	}
 }
 
@@ -227,4 +240,46 @@ func NewTown() Item {
 func NewCity() Item {
 	onceAddress.Do(loadAddresses)
 	return addresses.Addresses.City[r.Int()%len(addresses.Addresses.City)]
+}
+
+func findAddressByIndex(a string, i int) *Address {
+	onceAddress.Do(loadAddresses)
+	for _, prefecture := range addresses.Addresses.Prefecture {
+		if !strings.HasPrefix(a, prefecture[i]) {
+			continue
+		}
+		for _, city := range addresses.Addresses.City {
+			if !strings.HasPrefix(a, prefecture[i]+city[i]) {
+				continue
+			}
+			for _, town := range addresses.Addresses.Town {
+				if a != prefecture[i]+city[i]+town[i] {
+					continue
+				}
+				println((&Address{
+					Prefecture: prefecture,
+					City:       city,
+					Town:       town,
+				}).String())
+				return &Address{
+					Prefecture: prefecture,
+					City:       city,
+					Town:       town,
+				}
+			}
+		}
+	}
+	return nil
+}
+
+func FindAddressByKanji(address string) *Address {
+	return findAddressByIndex(address, 0)
+}
+
+func FindAddressByHiragana(address string) *Address {
+	return findAddressByIndex(address, 1)
+}
+
+func FindAddressByKatakana(address string) *Address {
+	return findAddressByIndex(address, 2)
 }
