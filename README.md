@@ -57,7 +57,7 @@ func main() {
 
 ## Requirements
 
-goang
+golang
 
 ## Installation
 
