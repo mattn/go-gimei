@@ -5,6 +5,7 @@ import (
 	"math/rand"
 	"os"
 	"path/filepath"
+	"strings"
 	"sync"
 	"time"
 
@@ -53,7 +54,7 @@ type name struct {
 		Male   []Item `yaml:"male"`
 		Female []Item `yaml:"female"`
 	} `yaml:"first_name"`
-	LastName [][]string `yaml:"last_name"`
+	LastName []Item `yaml:"last_name"`
 }
 
 type Name struct {
@@ -125,6 +126,39 @@ func NewFemale() *Name {
 		Last:  names.LastName[r.Int()%len(names.LastName)],
 		Sex:   Female,
 	}
+}
+
+func FindByKanji(name string) *Name {
+	token := strings.SplitN(name, " ", 2)
+	if len(token) != 2 {
+		return nil
+	}
+	for _, last := range names.LastName {
+		if last.Kanji() != token[0] {
+			continue
+		}
+		for _, first := range names.FirstName.Male {
+			if first.Kanji() != token[1] {
+				continue
+			}
+			return &Name{
+				First: first,
+				Last:  last,
+				Sex:   Male,
+			}
+		}
+		for _, first := range names.FirstName.Female {
+			if first.Kanji() != token[1] {
+				continue
+			}
+			return &Name{
+				First: first,
+				Last:  last,
+				Sex:   Female,
+			}
+		}
+	}
+	return nil
 }
 
 type address struct {
