@@ -1,6 +1,7 @@
 package gimei
 
 import (
+	"go/build"
 	"io/ioutil"
 	"math/rand"
 	"os"
@@ -85,7 +86,7 @@ type Name struct {
 
 func loadNames() {
 	rp := "src/github.com/mattn/go-gimei/data/names.yml"
-	for _, p := range filepath.SplitList(os.Getenv("GOPATH")) {
+	for _, p := range filepath.SplitList(build.Default.GOPATH) {
 		f := filepath.Join(p, rp)
 		if _, err := os.Stat(f); err == nil {
 			if b, err := ioutil.ReadFile(f); err == nil {
@@ -224,8 +225,9 @@ type Address struct {
 
 func loadAddresses() {
 	rp := "src/github.com/mattn/go-gimei/data/addresses.yml"
-	for _, p := range filepath.SplitList(os.Getenv("GOPATH")) {
+	for _, p := range filepath.SplitList(build.Default.GOPATH) {
 		f := filepath.Join(p, rp)
+		println(f)
 		if _, err := os.Stat(f); err == nil {
 			if b, err := ioutil.ReadFile(f); err == nil {
 				if err = yaml.Unmarshal(b, &addresses); err == nil {
