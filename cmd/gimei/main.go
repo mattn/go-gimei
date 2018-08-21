@@ -89,6 +89,46 @@ func doAddress(address *gimei.Address, args []string) {
 func main() {
 	var t string
 	flag.StringVar(&t, "type", "name", "type of generator(name/male/female/address)")
+	flag.Usage = func() {
+		fmt.Fprintf(os.Stderr, `Usage of gimei:
+  -type string
+        type of generator(name/male/female/address) (default "name")
+
+  Arguments for name/male/female:
+    name
+    kanji
+    hiragana
+    katakana
+    last-name
+    last-kanji
+    last-hiragana
+    last-katakana
+    first-name
+    first-kanji
+    first-hiragana
+    first-katakana
+    is-male
+    is-female
+  
+  Arguments for address:
+    name
+    kanji
+    hiragana
+    katakana
+    prefecture-name
+    prefecture-kanji
+    prefecture-hiragana
+    prefecture-katakana
+    town-name
+    town-kanji
+    town-hiragana
+    town-katakana
+    city-name
+    city-kanji
+    city-hiragana
+    city-katakana
+`)
+	}
 	flag.Parse()
 
 	switch t {
