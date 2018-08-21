@@ -12,7 +12,7 @@ func doName(name *gimei.Name, args []string) {
 	for _, arg := range args {
 		ret := ""
 		switch arg {
-		case "string":
+		case "name":
 			ret = name.String() // 斎藤 陽菜
 		case "kanji":
 			ret = name.Kanji() // 斎藤 陽菜
@@ -20,12 +20,16 @@ func doName(name *gimei.Name, args []string) {
 			ret = name.Hiragana() // さいとう はるな
 		case "katakana":
 			ret = name.Katakana() // サイトウ ハルナ
+		case "last-name":
+			ret = name.Last.String() // 斎藤
 		case "last-kanji":
 			ret = name.Last.Kanji() // 斎藤
 		case "last-hiragana":
 			ret = name.Last.Hiragana() // さいとう
 		case "last-katakana":
 			ret = name.Last.Katakana() // サイトウ
+		case "first-name":
+			ret = name.First.String() // 陽菜
 		case "first-kanji":
 			ret = name.First.Kanji() // 陽菜
 		case "first-hiragana":
@@ -45,7 +49,7 @@ func doAddress(address *gimei.Address, args []string) {
 	for _, arg := range args {
 		ret := ""
 		switch arg {
-		case "string":
+		case "name":
 			ret = address.String() // 岡山県大島郡大和村稲木町
 		case "kanji":
 			ret = address.Kanji() // 岡山県大島郡大和村稲木町
@@ -53,7 +57,7 @@ func doAddress(address *gimei.Address, args []string) {
 			ret = address.Hiragana() // おかやまけんおおしまぐんやまとそんいなぎちょう
 		case "katakana":
 			ret = address.Katakana() // オカヤマケンオオシマグンヤマトソンイナギチョウ
-		case "prefecture-string":
+		case "prefecture-name":
 			ret = address.Prefecture.String() // 岡山県
 		case "prefecture-kanji":
 			ret = address.Prefecture.Kanji() // 岡山県
@@ -61,7 +65,7 @@ func doAddress(address *gimei.Address, args []string) {
 			ret = address.Prefecture.Hiragana() // おかやまけん
 		case "prefecture-katakana":
 			ret = address.Prefecture.Katakana() // オカヤマケン
-		case "town-string":
+		case "town-name":
 			ret = address.Town.String() // 大島郡大和村
 		case "town-kanji":
 			ret = address.Town.Kanji() // 大島郡大和村
@@ -69,7 +73,7 @@ func doAddress(address *gimei.Address, args []string) {
 			ret = address.Town.Hiragana() // おおしまぐんやまとそん
 		case "town-katakana":
 			ret = address.Town.Katakana() // オオシマグンヤマトソン
-		case "city-string":
+		case "city-name":
 			ret = address.City.String() // 稲木町
 		case "city-kanji":
 			ret = address.City.Kanji() // 稲木町
