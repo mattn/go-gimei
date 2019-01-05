@@ -21,10 +21,6 @@ var (
 	r           *rand.Rand
 )
 
-func init() {
-	r = rand.New(rand.NewSource(time.Now().UnixNano()))
-}
-
 // Item take three figure for japanese. Kanji/Hiragana/Katakana.
 // It's not only the difference of sounds, it just letters.
 type Item []string
@@ -85,6 +81,8 @@ type Name struct {
 }
 
 func loadNames() {
+	r = rand.New(rand.NewSource(time.Now().UnixNano()))
+
 	rp := "src/github.com/mattn/go-gimei/data/names.yml"
 	for _, p := range filepath.SplitList(build.Default.GOPATH) {
 		f := filepath.Join(p, rp)
@@ -131,7 +129,8 @@ func (n *Name) IsFemale() bool {
 
 // NewName return new instance of person.
 func NewName() *Name {
-	if rand.Int()%2 == 0 {
+	onceName.Do(loadNames)
+	if r.Int()%2 == 0 {
 		return NewMale()
 	} else {
 		return NewFemale()
