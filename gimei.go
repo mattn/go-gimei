@@ -6,6 +6,7 @@ import (
 	"math/rand"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"sync"
 	"time"
@@ -83,6 +84,16 @@ type Name struct {
 func loadNames() {
 	r = rand.New(rand.NewSource(time.Now().UnixNano()))
 
+	_, sf, _, _ := runtime.Caller(0)
+	dp := filepath.Dir(sf)
+	f := filepath.Join(dp, "data/names.yml")
+	if _, err := os.Stat(f); err == nil {
+		if b, err := ioutil.ReadFile(f); err == nil {
+			if err = yaml.Unmarshal(b, &names); err == nil {
+				return
+			}
+		}
+	}
 	rp := "src/github.com/mattn/go-gimei/data/names.yml"
 	for _, p := range filepath.SplitList(build.Default.GOPATH) {
 		f := filepath.Join(p, rp)
@@ -223,6 +234,17 @@ type Address struct {
 }
 
 func loadAddresses() {
+	_, sf, _, _ := runtime.Caller(0)
+	dp := filepath.Dir(sf)
+	f := filepath.Join(dp, "data/addresses.yml")
+	if _, err := os.Stat(f); err == nil {
+		if b, err := ioutil.ReadFile(f); err == nil {
+			if err = yaml.Unmarshal(b, &addresses); err == nil {
+				return
+			}
+		}
+	}
+
 	rp := "src/github.com/mattn/go-gimei/data/addresses.yml"
 	for _, p := range filepath.SplitList(build.Default.GOPATH) {
 		f := filepath.Join(p, rp)
