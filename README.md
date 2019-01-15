@@ -64,12 +64,6 @@ golang
 ```
 $ go get github.com/mattn/go-gimei
 ```
-or
-```
-$ dep ensure -add github.com/mattn/go-gimei
-$ echo -e '\n  [[prune.project]]\n    name = "github.com/mattn/go-gimei"\n    non-go = false\n    unused-packages = false' >> Gopkg.toml
-$ dep ensure
-```
 
 ## License
 
