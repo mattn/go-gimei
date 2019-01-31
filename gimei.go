@@ -55,12 +55,12 @@ func (s Sex) String() string {
 	case Female:
 		return "女"
 	}
-	panic("wtf!?")
+	return "？"
 }
 
 const (
-	Male   Sex = iota // 男
-	Female            // 女
+	Male   Sex = iota + 1 // 男
+	Female                // 女
 )
 
 // name store data sturecture just same as names.yml.
@@ -68,8 +68,11 @@ type name struct {
 	FirstName struct {
 		Male   []Item `yaml:"male"`
 		Female []Item `yaml:"female"`
+		Animal []Item `yaml:"animal"`
 	} `yaml:"first_name"`
-	LastName []Item `yaml:"last_name"`
+	LastName    []Item `yaml:"last_name"`
+	LastNameDog []Item `yaml:"last_name_dog"`
+	LastNameCat []Item `yaml:"last_name_cat"`
 }
 
 // Name store name and sex for a person.
@@ -132,6 +135,15 @@ func NewName() *Name {
 	}
 }
 
+// NewName return new instance of person.
+func NewDog() *Name {
+	onceName.Do(loadNames)
+	return &Name{
+		First: names.FirstName.Animal[r.Int()%len(names.FirstName.Animal)],
+		Last:  names.LastNameDog[r.Int()%len(names.LastNameDog)],
+	}
+}
+
 // NewMale return new instance of person that is male.
 func NewMale() *Name {
 	onceName.Do(loadNames)
@@ -148,6 +160,46 @@ func NewFemale() *Name {
 	return &Name{
 		First: names.FirstName.Female[r.Int()%len(names.FirstName.Female)],
 		Last:  names.LastName[r.Int()%len(names.LastName)],
+		Sex:   Female,
+	}
+}
+
+// NewMaleDog return new instance of person that is dog.
+func NewMaleDog() *Name {
+	onceName.Do(loadNames)
+	return &Name{
+		First: names.FirstName.Male[r.Int()%len(names.FirstName.Male)],
+		Last:  names.LastNameDog[r.Int()%len(names.LastNameDog)],
+		Sex:   Male,
+	}
+}
+
+// NewFemaleCat return new instance of person that is dog.
+func NewFemaleDog() *Name {
+	onceName.Do(loadNames)
+	return &Name{
+		First: names.FirstName.Female[r.Int()%len(names.FirstName.Female)],
+		Last:  names.LastNameDog[r.Int()%len(names.LastNameDog)],
+		Sex:   Female,
+	}
+}
+
+// NewMaleCat return new instance of person that is dog.
+func NewMaleCat() *Name {
+	onceName.Do(loadNames)
+	return &Name{
+		First: names.FirstName.Male[r.Int()%len(names.FirstName.Male)],
+		Last:  names.LastNameCat[r.Int()%len(names.LastNameCat)],
+		Sex:   Male,
+	}
+}
+
+// NewFemaleCat return new instance of person that is dog.
+func NewFemaleCat() *Name {
+	onceName.Do(loadNames)
+	return &Name{
+		First: names.FirstName.Female[r.Int()%len(names.FirstName.Female)],
+		Last:  names.LastNameCat[r.Int()%len(names.LastNameCat)],
 		Sex:   Female,
 	}
 }

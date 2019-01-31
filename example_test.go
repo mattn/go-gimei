@@ -2,6 +2,7 @@ package gimei_test
 
 import (
 	"fmt"
+
 	"github.com/mattn/go-gimei"
 )
 
