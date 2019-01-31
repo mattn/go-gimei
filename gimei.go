@@ -144,6 +144,14 @@ func NewDog() *Name {
 	}
 }
 
+func NewCat() *Name {
+	onceName.Do(loadNames)
+	return &Name{
+		First: names.FirstName.Animal[r.Int()%len(names.FirstName.Animal)],
+		Last:  names.LastNameCat[r.Int()%len(names.LastNameCat)],
+	}
+}
+
 // NewMale return new instance of person that is male.
 func NewMale() *Name {
 	onceName.Do(loadNames)
