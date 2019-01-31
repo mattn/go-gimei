@@ -10,6 +10,8 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
+//go:generate go-assets-builder -p gimei -o assets.go data
+
 var (
 	names       name
 	addresses   address
