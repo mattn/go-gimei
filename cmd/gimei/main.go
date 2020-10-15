@@ -140,6 +140,10 @@ func main() {
 		doName(gimei.NewFemale(), flag.Args())
 	case "address":
 		doAddress(gimei.NewAddress(), flag.Args())
+	case "dog":
+		doName(gimei.NewDog(), flag.Args())
+	case "cat":
+		doName(gimei.NewCat(), flag.Args())
 	default:
 		flag.Usage()
 		os.Exit(2)
