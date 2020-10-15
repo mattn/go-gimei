@@ -82,9 +82,11 @@ type Name struct {
 	Sex   Sex
 }
 
-func loadNames() {
+func init() {
 	r = rand.New(rand.NewSource(time.Now().UnixNano()))
+}
 
+func loadNames() {
 	if f, err := Assets.Open("/data/names.yml"); err == nil {
 		if b, err := ioutil.ReadAll(f); err == nil {
 			if err = yaml.Unmarshal(b, &names); err == nil {
