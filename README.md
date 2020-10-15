@@ -69,6 +69,8 @@ $ go get github.com/mattn/go-gimei
 
 MIT
 
+Dictionary YAML file is generated from [naist-jdic](https://ja.osdn.net/projects/naist-jdic/).
+
 ## Author
 
 Yasuhiro Matsumoto (a.k.a mattn)
