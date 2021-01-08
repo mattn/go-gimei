@@ -44,7 +44,7 @@ func (i Item) Katakana() string {
 	return i[2]
 }
 
-// Sex store Male ore Female.
+// Sex store Male or Female.
 type Sex int
 
 // String implement Stringer.
