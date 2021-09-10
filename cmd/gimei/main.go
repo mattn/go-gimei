@@ -9,8 +9,8 @@ import (
 )
 
 func doName(name *gimei.Name, args []string) {
-	for _, arg := range args {
-		ret := ""
+	for i, arg := range args {
+		var ret string
 		switch arg {
 		case "name":
 			ret = name.String() // 斎藤 陽菜
@@ -41,13 +41,18 @@ func doName(name *gimei.Name, args []string) {
 		case "is-female":
 			ret = fmt.Sprint(name.IsMale()) // false
 		}
-		fmt.Print(ret)
+		if ret != "" {
+			if i > 0 {
+				fmt.Print(", ")
+			}
+			fmt.Print(ret)
+		}
 	}
 }
 
 func doAddress(address *gimei.Address, args []string) {
-	for _, arg := range args {
-		ret := ""
+	for i, arg := range args {
+		var ret string
 		switch arg {
 		case "name":
 			ret = address.String() // 岡山県大島郡大和村稲木町
@@ -82,7 +87,12 @@ func doAddress(address *gimei.Address, args []string) {
 		case "city-katakana":
 			ret = address.City.Katakana() // イナギチョウ
 		}
-		fmt.Print(ret)
+		if ret != "" {
+			if i > 0 {
+				fmt.Print(", ")
+			}
+			fmt.Print(ret)
+		}
 	}
 }
 
