@@ -9,6 +9,9 @@ import (
 )
 
 func doName(name *gimei.Name, args []string) {
+	if len(args) == 0 {
+		args = []string{"name"}
+	}
 	for i, arg := range args {
 		var ret string
 		switch arg {
@@ -51,6 +54,9 @@ func doName(name *gimei.Name, args []string) {
 }
 
 func doAddress(address *gimei.Address, args []string) {
+	if len(args) == 0 {
+		args = []string{"name"}
+	}
 	for i, arg := range args {
 		var ret string
 		switch arg {
