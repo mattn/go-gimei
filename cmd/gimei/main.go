@@ -8,7 +8,7 @@ import (
 	"github.com/mattn/go-gimei"
 )
 
-func doName(name *gimei.Name, args []string) {
+func doName(name *gimei.Name, args []string, sep string) {
 	if len(args) == 0 {
 		args = []string{"name"}
 	}
@@ -46,14 +46,14 @@ func doName(name *gimei.Name, args []string) {
 		}
 		if ret != "" {
 			if i > 0 {
-				fmt.Print(", ")
+				fmt.Print(sep)
 			}
 			fmt.Print(ret)
 		}
 	}
 }
 
-func doAddress(address *gimei.Address, args []string) {
+func doAddress(address *gimei.Address, args []string, sep string) {
 	if len(args) == 0 {
 		args = []string{"name"}
 	}
@@ -95,7 +95,7 @@ func doAddress(address *gimei.Address, args []string) {
 		}
 		if ret != "" {
 			if i > 0 {
-				fmt.Print(", ")
+				fmt.Print(sep)
 			}
 			fmt.Print(ret)
 		}
@@ -104,7 +104,9 @@ func doAddress(address *gimei.Address, args []string) {
 
 func main() {
 	var t string
+	var sep string
 	flag.StringVar(&t, "type", "name", "type of generator(name/male/female/address)")
+	flag.StringVar(&sep, "sep", ", ", "separator")
 	flag.Usage = func() {
 		fmt.Fprintf(os.Stderr, `Usage of gimei:
   -type string
@@ -149,17 +151,17 @@ func main() {
 
 	switch t {
 	case "name":
-		doName(gimei.NewName(), flag.Args())
+		doName(gimei.NewName(), flag.Args(), sep)
 	case "male":
-		doName(gimei.NewMale(), flag.Args())
+		doName(gimei.NewMale(), flag.Args(), sep)
 	case "female":
-		doName(gimei.NewFemale(), flag.Args())
+		doName(gimei.NewFemale(), flag.Args(), sep)
 	case "address":
-		doAddress(gimei.NewAddress(), flag.Args())
+		doAddress(gimei.NewAddress(), flag.Args(), sep)
 	case "dog":
-		doName(gimei.NewDog(), flag.Args())
+		doName(gimei.NewDog(), flag.Args(), sep)
 	case "cat":
-		doName(gimei.NewCat(), flag.Args())
+		doName(gimei.NewCat(), flag.Args(), sep)
 	default:
 		flag.Usage()
 		os.Exit(2)
