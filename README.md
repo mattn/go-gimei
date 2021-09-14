@@ -65,6 +65,14 @@ golang
 $ go get github.com/mattn/go-gimei
 ```
 
+## Running Tests
+
+To run all the tests, do:
+
+```bash
+$ go test
+```
+
 ## License
 
 MIT
