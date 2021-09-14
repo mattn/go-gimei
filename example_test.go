@@ -12,20 +12,20 @@ func ExampleGimeiName() {
 	fmt.Println(name.Kanji())
 	fmt.Println(name.Hiragana())
 	fmt.Println(name.Katakana())
+	fmt.Println(name.Last.Kanji())
+	fmt.Println(name.Last.Hiragana())
+	fmt.Println(name.Last.Katakana())
+	fmt.Println(name.First.Kanji())
+	fmt.Println(name.First.Hiragana())
+	fmt.Println(name.First.Katakana())
 	// Output:
 	// 小林 顕士
 	// 小林 顕士
 	// こばやし けんじ
 	// コバヤシ ケンジ
-	fmt.Println(name.Last.Kanji())
-	fmt.Println(name.Last.Hiragana())
-	fmt.Println(name.Last.Katakana())
 	// 小林
 	// こばやし
 	// コバヤシ
-	fmt.Println(name.First.Kanji())
-	fmt.Println(name.First.Hiragana())
-	fmt.Println(name.First.Katakana())
 	// 顕士
 	// けんじ
 	// ケンジ
