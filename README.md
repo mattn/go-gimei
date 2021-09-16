@@ -57,7 +57,7 @@ func main() {
 
 ### Deterministic Random
 
-gimei supports seeding of its pseudo-random number generator to provide
+go-gimei supports seeding of its pseudo-random number generator to provide
 deterministic output of repeated method calls.
 
 ```
