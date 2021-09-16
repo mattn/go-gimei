@@ -55,6 +55,24 @@ func main() {
 }
 ```
 
+### Deterministic Random
+
+gimei supports seeding of its pseudo-random number generator to provide
+deterministic output of repeated method calls.
+
+```
+import "math/rand"
+... 
+gimei.SetRandom(rand.New(rand.NewSource(42)))
+fmt.Println(gimei.NewName())    // 前川 永麻
+fmt.Println(gimei.NewAddress()) // 佐賀県斜里郡斜里町浄法寺町樋口
+
+gimei.SetRandom(rand.New(rand.NewSource(42)))
+fmt.Println(gimei.NewName())    // 前川 永麻
+fmt.Println(gimei.NewAddress()) // 佐賀県斜里郡斜里町浄法寺町樋口
+
+```
+
 ## Requirements
 
 golang
