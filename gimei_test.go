@@ -1,6 +1,7 @@
 package gimei_test
 
 import (
+	"fmt"
 	"math/rand"
 	"testing"
 
@@ -8,29 +9,31 @@ import (
 )
 
 func TestDeterministicRandom(t *testing.T) {
-	var prev, curr [7]string
+	gimei.SetRandom(rand.New(rand.NewSource(42)))
+	prev := collectNewResults()
 
 	gimei.SetRandom(rand.New(rand.NewSource(42)))
-	storeResults(prev[:])
-
-	gimei.SetRandom(rand.New(rand.NewSource(42)))
-	storeResults(curr[:])
+	curr := collectNewResults()
 
 	// expect same result
 	for i := 0; i < len(curr); i++ {
-		if prev[i] != curr[i] {
+		if prev[i].String() != curr[i].String() {
 			t.Errorf("curr[%d] == %q, want %q", i, curr[i], prev[i])
 		}
 	}
 }
 
-// store string results of gimei functions
-func storeResults(results []string) {
-	results[0] = gimei.NewName().String()
-	results[1] = gimei.NewMale().String()
-	results[2] = gimei.NewFemale().String()
-	results[3] = gimei.NewAddress().String()
-	results[4] = gimei.NewPrefecture().String()
-	results[5] = gimei.NewCity().String()
-	results[6] = gimei.NewTown().String()
+// returns slice of fmt.Stringer which return value of gimei 'New' functions
+func collectNewResults() []fmt.Stringer {
+	var s []fmt.Stringer
+
+	s = append(s, gimei.NewName())
+	s = append(s, gimei.NewMale())
+	s = append(s, gimei.NewFemale())
+	s = append(s, gimei.NewAddress())
+	s = append(s, gimei.NewPrefecture())
+	s = append(s, gimei.NewCity())
+	s = append(s, gimei.NewTown())
+
+	return s
 }
