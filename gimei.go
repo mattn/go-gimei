@@ -86,6 +86,10 @@ func init() {
 	r = rand.New(rand.NewSource(time.Now().UnixNano()))
 }
 
+func SetRandom(rnd *rand.Rand) {
+	r = rnd
+}
+
 func loadNames() {
 	if f, err := Assets.Open("/data/names.yml"); err == nil {
 		if b, err := ioutil.ReadAll(f); err == nil {
