@@ -42,7 +42,7 @@ func doName(name *gimei.Name, args []string, sep string) {
 		case "is-male":
 			ret = fmt.Sprint(name.IsMale()) // false
 		case "is-female":
-			ret = fmt.Sprint(name.IsMale()) // false
+			ret = fmt.Sprint(name.IsFemale()) // false
 		}
 		if ret != "" {
 			if i > 0 {
