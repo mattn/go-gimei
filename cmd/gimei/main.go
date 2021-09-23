@@ -109,6 +109,8 @@ func main() {
 	flag.StringVar(&sep, "sep", ", ", "separator")
 	flag.Usage = func() {
 		fmt.Fprintf(os.Stderr, `Usage of gimei:
+  -sep separator
+        field separator (default ",")
   -type string
         type of generator(name/male/female/address) (default "name")
 
