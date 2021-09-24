@@ -73,28 +73,44 @@ $ gimei [OPTIONS] [ARGS]
 
 #### ARGS
 
-````
-Arguments for a personal name:
-
-- 'kanji', 'hiragana', 'katakana'
-    full name  
-- 'last-kanji', 'last-hiragana', 'last-katakana'
-    last name 
-- 'first-kanji', 'first-hiragana', 'first-katakana'
-    first name 
-- 'is-male', 'is-female'
-    'true' or 'false'
+Arguments for a personal name
+```
+to display fullname:
+    'kanji',
+    'hiragana',
+    'katakana'
+to display last name:
+    'last-kanji',
+    'last-hiragana',
+    'last-katakana'
+to display first name:
+    'first-kanji',
+    'first-hiragana',
+    'first-katakana'
+to display which it is male/female:
+    'is-male',
+    'is-female'
+```
 
 Arguments for an address:
 
-- kanji / hiragana / katakana
-    address
-- 'prefecture-kanji', 'prefecture-hiragana', 'prefecture-katakana'
-    prefecture
-- 'town-kanji', 'town-hiragana', 'town-katakana'
-    town
-- 'city-kanji', 'city-hiragana', 'city-katakana'
-    city
+```
+to display address
+    'kanji'
+    'hiragana'
+    'katakana'
+to display prefecture
+    'prefecture-kanji'
+    'prefecture-hiragana'
+    'prefecture-katakana'
+to display town
+    'town-kanji'
+    'town-hiragana'
+    'town-katakana'
+to display city
+    'city-kanji'
+    'city-hiragana'
+    'city-katakana'
 ```
 
 #### EXAMPLES
