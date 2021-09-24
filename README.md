@@ -58,34 +58,48 @@ func main() {
 ### CLI
 
 ```bash
-$ gimei [OPTION] [ARGS]
+$ gimei [OPTIONS] [ARGS]
 ```
 
 #### OPTIONS
-```
-  -type string
-        type of generator(name/male/female/address) (default "name")
-```
-名前(name/male/female) と住所(address) のいずれかを type で指定できる。デフォルトは "name"。
-指定したタイプごとに、出力するフィールドを指定できる。
-名前(name/male/female) の場合
-name/kanji/hiragana/katakana
-last-name/last-kanji/last-hiragana/last-katakana
-first-name/first-kanji/first-hiragana/first-katakana
-is-male/is-female
-住所(address)の場合
-name/kanji/hiragana/katakana
-prefecture-name/prefecture-kanji/prefecture-hiragana/prefecture-katakana
-town-name/town-kanji/town-hiragana/town-katakana
-city-name/city-kanji/city-hiragana/city-katakana
 
 ```
-  -sep separator
-        フィールドを区切る文字列を指定できる
+-type string
+    display instead of a mixed-gender personal name: 'male', 'female' or 'address'.
+    if ARGS is omitted, display in kanji.
+-sep separator
+    field separator
+```    
+
+#### ARGS
+
+````
+Arguments for a personal name:
+
+- 'kanji', 'hiragana', 'katakana'
+    full name  
+- 'last-kanji', 'last-hiragana', 'last-katakana'
+    last name 
+- 'first-kanji', 'first-hiragana', 'first-katakana'
+    first name 
+- 'is-male', 'is-female'
+    'true' or 'false'
+
+Arguments for an address:
+
+- kanji / hiragana / katakana
+    address
+- 'prefecture-kanji', 'prefecture-hiragana', 'prefecture-katakana'
+    prefecture
+- 'town-kanji', 'town-hiragana', 'town-katakana'
+    town
+- 'city-kanji', 'city-hiragana', 'city-katakana'
+    city
 ```
 
 #### EXAMPLES
-```
+
+```bash
 $ gimei
 古賀 正浩
 $ gimei name katakana
