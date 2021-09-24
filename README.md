@@ -66,16 +66,17 @@ $ gimei [OPTIONS] [ARGS]
 ```
 -type string
     display instead of a mixed-gender personal name: 'male', 'female' or 'address'.
-    if ARGS is omitted, display in kanji.
+    if ARGS is omitted, display it in kanji.
 -sep separator
     field separator
 ```    
 
 #### ARGS
 
-Arguments for a personal name
+Arguments for a personal name:
+
 ```
-to display fullname:
+to display full name:
     'kanji',
     'hiragana',
     'katakana'
@@ -95,19 +96,19 @@ to display which it is male/female:
 Arguments for an address:
 
 ```
-to display address
+to display address:
     'kanji'
     'hiragana'
     'katakana'
-to display prefecture
+to display prefecture:
     'prefecture-kanji'
     'prefecture-hiragana'
     'prefecture-katakana'
-to display town
+to display town:
     'town-kanji'
     'town-hiragana'
     'town-katakana'
-to display city
+to display city:
     'city-kanji'
     'city-hiragana'
     'city-katakana'
@@ -118,7 +119,7 @@ to display city
 ```bash
 $ gimei
 古賀 正浩
-$ gimei name katakana
+$ gimei kanji katakana
 中村 紳一, ナカムラ シンイチ
 $ gimei -type address -sep '/' prefecture-kanji town-kanji
 滋賀県/田所町
