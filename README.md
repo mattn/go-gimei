@@ -55,6 +55,45 @@ func main() {
 }
 ```
 
+### CLI
+
+```bash
+$ gimei [OPTION] [ARGS]
+```
+
+#### OPTIONS
+```
+  -type string
+        type of generator(name/male/female/address) (default "name")
+```
+名前(name/male/female) と住所(address) のいずれかを type で指定できる。デフォルトは "name"。
+指定したタイプごとに、出力するフィールドを指定できる。
+名前(name/male/female) の場合
+name/kanji/hiragana/katakana
+last-name/last-kanji/last-hiragana/last-katakana
+first-name/first-kanji/first-hiragana/first-katakana
+is-male/is-female
+住所(address)の場合
+name/kanji/hiragana/katakana
+prefecture-name/prefecture-kanji/prefecture-hiragana/prefecture-katakana
+town-name/town-kanji/town-hiragana/town-katakana
+city-name/city-kanji/city-hiragana/city-katakana
+
+```
+  -sep separator
+        フィールドを区切る文字列を指定できる
+```
+
+#### EXAMPLES
+```
+$ gimei
+古賀 正浩
+$ gimei name katakana
+中村 紳一, ナカムラ シンイチ
+$ gimei -type address -sep '/' prefecture-kanji town-kanji
+滋賀県/田所町
+```
+
 ### Deterministic Random
 
 go-gimei supports seeding of its pseudo-random number generator to provide
