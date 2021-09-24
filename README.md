@@ -55,6 +55,76 @@ func main() {
 }
 ```
 
+### CLI
+
+```bash
+$ gimei [OPTIONS] [ARGS]
+```
+
+#### OPTIONS
+
+```
+-type string
+    display instead of a mixed-gender personal name: 'male', 'female' or 'address'.
+    if ARGS is omitted, display it in kanji.
+-sep separator
+    field separator
+```    
+
+#### ARGS
+
+Arguments for a personal name:
+
+```
+to display full name:
+    'kanji',
+    'hiragana',
+    'katakana'
+to display last name:
+    'last-kanji',
+    'last-hiragana',
+    'last-katakana'
+to display first name:
+    'first-kanji',
+    'first-hiragana',
+    'first-katakana'
+to display which it is male/female:
+    'is-male',
+    'is-female'
+```
+
+Arguments for an address:
+
+```
+to display address:
+    'kanji'
+    'hiragana'
+    'katakana'
+to display prefecture:
+    'prefecture-kanji'
+    'prefecture-hiragana'
+    'prefecture-katakana'
+to display town:
+    'town-kanji'
+    'town-hiragana'
+    'town-katakana'
+to display city:
+    'city-kanji'
+    'city-hiragana'
+    'city-katakana'
+```
+
+#### EXAMPLES
+
+```bash
+$ gimei
+古賀 正浩
+$ gimei kanji katakana
+中村 紳一, ナカムラ シンイチ
+$ gimei -type address -sep '/' prefecture-kanji town-kanji
+滋賀県/田所町
+```
+
 ### Deterministic Random
 
 go-gimei supports seeding of its pseudo-random number generator to provide
