@@ -225,7 +225,7 @@ func findNameByIndex(n string, i int) *Name {
 		return nil
 	}
 	for _, last := range names.LastName {
-		if last.Kanji() != token[0] {
+		if last[i] != token[0] {
 			continue
 		}
 		for _, first := range names.FirstName.Male {
@@ -252,17 +252,17 @@ func findNameByIndex(n string, i int) *Name {
 	return nil
 }
 
-// FindNameByKanji find Name from kanji.
+// FindNameByKanji find Name by kanji.
 func FindNameByKanji(kanji string) *Name {
 	return findNameByIndex(kanji, 0)
 }
 
-// FindNameByHiragana find Name from hiragana.
+// FindNameByHiragana find Name by hiragana.
 func FindNameByHiragana(hiragana string) *Name {
 	return findNameByIndex(hiragana, 1)
 }
 
-// FindNameByKanji find Name from katakana.
+// FindNameByKatakana find Name by katakana.
 func FindNameByKatakana(katakana string) *Name {
 	return findNameByIndex(katakana, 2)
 }
@@ -309,7 +309,7 @@ func (a *Address) Hiragana() string {
 	return a.Prefecture.Hiragana() + a.City.Hiragana() + a.Town.Hiragana()
 }
 
-// Hiragana return string of Address as katakana.
+// Katakana return string of Address as katakana.
 func (a *Address) Katakana() string {
 	return a.Prefecture.Katakana() + a.City.Katakana() + a.Town.Katakana()
 }
@@ -366,17 +366,17 @@ func findAddressByIndex(a string, i int) *Address {
 	return nil
 }
 
-// FindAddressByKanji find Address from kanji.
+// FindAddressByKanji find Address by kanji.
 func FindAddressByKanji(kanji string) *Address {
 	return findAddressByIndex(kanji, 0)
 }
 
-// FindAddressByHiragana find Address from hiragana.
+// FindAddressByHiragana find Address by hiragana.
 func FindAddressByHiragana(hiragana string) *Address {
 	return findAddressByIndex(hiragana, 1)
 }
 
-// FindAddressByKanji find Address from katakana.
+// FindAddressByKatakana find Address by katakana.
 func FindAddressByKatakana(katakana string) *Address {
 	return findAddressByIndex(katakana, 2)
 }
