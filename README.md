@@ -3,7 +3,7 @@
 This project is a golang port of Ruby's [gimei](https://github.com/willnet/gimei).  Import
 as library or use as CLI.
 
-go-gimei generates fake data that peopel's name and address in Japanese and supports
+go-gimei generates fake data that people's name and address in Japanese and supports
 furigana phonetic renderings of kanji.
 
 The project name comes from Japanese '偽名' means a false name. 
