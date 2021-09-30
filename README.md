@@ -1,6 +1,12 @@
 # go-gimei
 
-golang port of [gimei](https://github.com/willnet/gimei)
+This project is a golang port of Ruby's [gimei](https://github.com/willnet/gimei).  Import
+as library or use as CLI.
+
+go-gimei generates fake data that people's name and address in Japanese and supports
+furigana phonetic renderings of kanji.
+
+The project name comes from Japanese '偽名' means a false name. 
 
 ## Usage
 
@@ -55,7 +61,25 @@ func main() {
 }
 ```
 
-### CLI
+### Deterministic Random
+
+go-gimei supports seeding of its pseudo-random number generator to provide
+deterministic output of repeated method calls.
+
+```go
+import "math/rand"
+
+gimei.SetRandom(rand.New(rand.NewSource(42)))
+fmt.Println(gimei.NewName())    // 前川 永麻
+fmt.Println(gimei.NewAddress()) // 佐賀県斜里郡斜里町浄法寺町樋口
+
+gimei.SetRandom(rand.New(rand.NewSource(42)))
+fmt.Println(gimei.NewName())    // 前川 永麻
+fmt.Println(gimei.NewAddress()) // 佐賀県斜里郡斜里町浄法寺町樋口
+
+```
+
+### CLI Usage
 
 ```bash
 $ gimei [OPTIONS] [ARGS]
@@ -125,32 +149,23 @@ $ gimei -type address -sep '/' prefecture-kanji town-kanji
 滋賀県/田所町
 ```
 
-### Deterministic Random
-
-go-gimei supports seeding of its pseudo-random number generator to provide
-deterministic output of repeated method calls.
-
-```go
-import "math/rand"
-
-gimei.SetRandom(rand.New(rand.NewSource(42)))
-fmt.Println(gimei.NewName())    // 前川 永麻
-fmt.Println(gimei.NewAddress()) // 佐賀県斜里郡斜里町浄法寺町樋口
-
-gimei.SetRandom(rand.New(rand.NewSource(42)))
-fmt.Println(gimei.NewName())    // 前川 永麻
-fmt.Println(gimei.NewAddress()) // 佐賀県斜里郡斜里町浄法寺町樋口
-
-```
-
 ## Requirements
 
 golang
 
 ## Installation
 
+Install the library.
 ```
 $ go get github.com/mattn/go-gimei
+```
+
+### CLI installation
+
+On Go version 1.16 or later, this command works:
+
+```bash
+$ go install github.com/mattn/go-gimei/cmd/gimei@latest
 ```
 
 ## Running Tests
