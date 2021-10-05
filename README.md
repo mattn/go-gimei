@@ -92,7 +92,9 @@ $ gimei [OPTIONS] [ARGS]
     display instead of a mixed-gender personal name: 'male', 'female' or 'address'.
     if ARGS is omitted, display it in kanji.
 -sep separator
-    field separator
+    field separator.
+-h, -help
+    display usage.
 ```    
 
 #### ARGS
