@@ -113,6 +113,8 @@ func main() {
         field separator (default ",")
   -type string
         type of generator(name/male/female/address) (default "name")
+  -h, -help
+        display this usage
 
   Arguments for name/male/female:
     name
