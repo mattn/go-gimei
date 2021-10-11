@@ -1,5 +1,10 @@
 # go-gimei
 
+[![Build Status](https://github.com/mattn/go-gimei/workflows/test/badge.svg?branch=master)](https://github.com/mattn/go-gimei/actions?query=workflow%3Atest)
+[![Codecov](https://codecov.io/gh/mattn/go-gimei/branch/master/graph/badge.svg)](https://codecov.io/gh/mattn/go-gimei)
+[![GoDoc](https://godoc.org/github.com/mattn/go-gimei?status.svg)](http://godoc.org/github.com/mattn/go-gimei)
+[![Go Report Card](https://goreportcard.com/badge/github.com/mattn/go-gimei)](https://goreportcard.com/report/github.com/mattn/go-gimei)
+
 This project is a golang port of Ruby's [gimei](https://github.com/willnet/gimei).  Import
 as library or use as CLI.
 
