@@ -1,7 +1,7 @@
 package gimei
 
 import (
-	"io/ioutil"
+	"embed"
 	"math/rand"
 	"strings"
 	"sync"
@@ -10,9 +10,10 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-//go:generate go-assets-builder -p gimei -o assets.go data
-
 var (
+	//go:embed data/addresses.yml data/names.yml
+	assets embed.FS
+
 	names       name
 	addresses   address
 	onceName    sync.Once
@@ -91,11 +92,9 @@ func SetRandom(rnd *rand.Rand) {
 }
 
 func loadNames() {
-	if f, err := Assets.Open("/data/names.yml"); err == nil {
-		if b, err := ioutil.ReadAll(f); err == nil {
-			if err = yaml.Unmarshal(b, &names); err == nil {
-				return
-			}
+	if b, err := assets.ReadFile("data/names.yml"); err == nil {
+		if err = yaml.Unmarshal(b, &names); err == nil {
+			return
 		}
 	}
 	panic("failed to load names data")
@@ -284,14 +283,12 @@ type Address struct {
 }
 
 func loadAddresses() {
-	if f, err := Assets.Open("/data/addresses.yml"); err == nil {
-		if b, err := ioutil.ReadAll(f); err == nil {
-			if err = yaml.Unmarshal(b, &addresses); err == nil {
-				return
-			}
+	if b, err := assets.ReadFile("data/addresses.yml"); err == nil {
+		if err = yaml.Unmarshal(b, &addresses); err == nil {
+			return
 		}
 	}
-	panic("failed to load names data")
+	panic("failed to load addresses data")
 }
 
 // String implement Stringer.
