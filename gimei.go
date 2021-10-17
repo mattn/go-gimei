@@ -11,13 +11,14 @@ import (
 )
 
 var (
-	//go:embed data/addresses.yml data/names.yml
+	//go:embed data/addresses.yml data/names.yml data/names_test.yml
 	assets embed.FS
 
 	names       name
 	addresses   address
 	onceName    sync.Once
 	onceAddress sync.Once
+	names_path  = "data/names.yml"
 	r           *rand.Rand
 )
 
@@ -91,8 +92,16 @@ func SetRandom(rnd *rand.Rand) {
 	r = rnd
 }
 
+func LoadNames(path string) {
+	names_path = "data/names.yml"
+	if path != ""  {
+		names_path = path
+	}
+	loadNames()
+}
+
 func loadNames() {
-	if b, err := assets.ReadFile("data/names.yml"); err == nil {
+	if b, err := assets.ReadFile(names_path); err == nil {
 		if err = yaml.Unmarshal(b, &names); err == nil {
 			return
 		}
@@ -217,6 +226,7 @@ func NewFemaleCat() *Name {
 	}
 }
 
+// Deprecated:	should not be used
 func findNameByIndex(n string, i int) *Name {
 	onceName.Do(loadNames)
 	token := strings.SplitN(n, " ", 2)
@@ -252,16 +262,22 @@ func findNameByIndex(n string, i int) *Name {
 }
 
 // FindNameByKanji find Name by kanji.
+//
+// Deprecated:	should not be used
 func FindNameByKanji(kanji string) *Name {
 	return findNameByIndex(kanji, 0)
 }
 
 // FindNameByHiragana find Name by hiragana.
+//
+// Deprecated:	should not be used
 func FindNameByHiragana(hiragana string) *Name {
 	return findNameByIndex(hiragana, 1)
 }
 
 // FindNameByKatakana find Name by katakana.
+//
+// Deprecated:	should not be used
 func FindNameByKatakana(katakana string) *Name {
 	return findNameByIndex(katakana, 2)
 }

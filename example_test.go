@@ -7,7 +7,9 @@ import (
 )
 
 func ExampleGimeiName() {
-	name := gimei.FindNameByKanji("小林 顕士")
+	defer gimei.LoadNames("")
+	gimei.LoadNames("data/names_test.yml")
+	name := gimei.NewMale()
 	fmt.Println(name)
 	fmt.Println(name.Kanji())
 	fmt.Println(name.Hiragana())
