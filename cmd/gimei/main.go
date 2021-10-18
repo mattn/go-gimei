@@ -116,7 +116,7 @@ func main() {
   -type string
         type of generator(name/male/female/address) (default "name")
   -count
-        display count of names
+        display count of data
   -h, -help
         display this usage
 
@@ -158,7 +158,7 @@ func main() {
 	flag.Parse()
 
 	if count {
-		fmt.Println(gimei.CountNames())
+		fmt.Println(gimei.CountData())
 		os.Exit(0)
 	}
 

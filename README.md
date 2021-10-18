@@ -99,7 +99,7 @@ $ gimei [OPTIONS] [ARGS]
 -sep separator
     field separator.
 -count
-    display count of names.
+    display count of data.
 -h, -help
     display usage.
 ```    
