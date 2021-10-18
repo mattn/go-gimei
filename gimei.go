@@ -2,6 +2,7 @@ package gimei
 
 import (
 	"embed"
+	"fmt"
 	"math/rand"
 	"strings"
 	"sync"
@@ -98,6 +99,15 @@ func loadNames() {
 		}
 	}
 	panic("failed to load names data")
+}
+
+func CountNames() string {
+	onceName.Do(loadNames)	
+	return fmt.Sprintf(`FirstName:
+  Male:      %9d 
+  Female:    %9d
+LastName:    %9d`,
+  len(names.FirstName.Male), len(names.FirstName.Female), len(names.LastName))
 }
 
 // String implement Stringer.

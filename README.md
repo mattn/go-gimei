@@ -98,6 +98,8 @@ $ gimei [OPTIONS] [ARGS]
     if ARGS is omitted, display it in kanji.
 -sep separator
     field separator.
+-count
+    display count of names.
 -h, -help
     display usage.
 ```    
