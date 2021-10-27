@@ -18,6 +18,7 @@ func ExampleGimeiName() {
 	fmt.Println(name.First.Kanji())
 	fmt.Println(name.First.Hiragana())
 	fmt.Println(name.First.Katakana())
+	fmt.Println(name.Sex)
 	// Output:
 	// 小林 顕士
 	// 小林 顕士
@@ -29,6 +30,7 @@ func ExampleGimeiName() {
 	// 顕士
 	// けんじ
 	// ケンジ
+	// 男
 }
 
 func ExampleGimeiAddress() {
