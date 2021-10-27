@@ -36,6 +36,7 @@ func main() {
 	fmt.Println(name.First.Kanji())    // 陽菜
 	fmt.Println(name.First.Hiragana()) // はるな
 	fmt.Println(name.First.Katakana()) // ハルナ
+	fmt.Println(name.Sex)              // 女
 	fmt.Println(name.IsMale())         // false
 
 	male := gimei.NewMale()
