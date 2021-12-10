@@ -127,17 +127,17 @@ func main() {
     kanji
     hiragana
     katakana
-	romaji
+    romaji
     last-name
     last-kanji
     last-hiragana
     last-katakana
-	last-romaji
+    last-romaji
     first-name
     first-kanji
     first-hiragana
     first-katakana
-	first-romaji
+    first-romaji
     is-male
     is-female
   
