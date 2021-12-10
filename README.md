@@ -30,12 +30,15 @@ func main() {
 	fmt.Println(name.Kanji())          // 斎藤 陽菜
 	fmt.Println(name.Hiragana())       // さいとう はるな
 	fmt.Println(name.Katakana())       // サイトウ ハルナ
+	fmt.Println(name.Romaji())         // saito haruna
 	fmt.Println(name.Last.Kanji())     // 斎藤
 	fmt.Println(name.Last.Hiragana())  // さいとう
 	fmt.Println(name.Last.Katakana())  // サイトウ
+	fmt.Println(name.Last.Romaji())    // saito
 	fmt.Println(name.First.Kanji())    // 陽菜
 	fmt.Println(name.First.Hiragana()) // はるな
 	fmt.Println(name.First.Katakana()) // ハルナ
+	fmt.Println(name.First.Romaji())   // haruna
 	fmt.Println(name.Sex)              // 女
 	fmt.Println(name.IsMale())         // false
 
