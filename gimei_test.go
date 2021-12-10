@@ -54,6 +54,10 @@ func TestFindName(t *testing.T) {
 	if gimei.FindNameByKatakana(target) == nil {
 		t.Errorf("FindNameByKatakana not found: %s", target)
 	}
+	target = name.Romaji()
+	if gimei.FindNameByRomaji(target) == nil {
+		t.Errorf("FindNameByRomaji not found: %s", target)
+	}
 }
 
 func TestFindAddress(t *testing.T) {
