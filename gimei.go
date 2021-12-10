@@ -21,7 +21,7 @@ var (
 	r           *rand.Rand
 )
 
-// Item take three figure for japanese. Kanji/Hiragana/Katakana.
+// Item take four figure for japanese. Kanji/Hiragana/Katakana/Romaji.
 // It's not only the difference of sounds, it just letters.
 type Item []string
 
@@ -43,6 +43,11 @@ func (i Item) Hiragana() string {
 // Hiragana return string of Item as katakana.
 func (i Item) Katakana() string {
 	return i[2]
+}
+
+// Hiragana return string of Item as romaji.
+func (i Item) Romaji() string {
+	return i[3]
 }
 
 // Sex store Male or Female.
@@ -118,6 +123,11 @@ func (n *Name) Hiragana() string {
 // Hiragana return string of Name as katakana.
 func (n *Name) Katakana() string {
 	return n.Last.Katakana() + " " + n.First.Katakana()
+}
+
+// Romaji return string of Name as katakana.
+func (n *Name) Romaji() string {
+	return n.Last.Romaji() + " " + n.First.Romaji()
 }
 
 // IsMale return true if he is male.
