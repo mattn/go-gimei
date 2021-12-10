@@ -276,6 +276,11 @@ func FindNameByKatakana(katakana string) *Name {
 	return findNameByIndex(katakana, 2)
 }
 
+// FindNameByRomaji find Name by romaji.
+func FindNameByRomaji(romaji string) *Name {
+	return findNameByIndex(romaji, 3)
+}
+
 // address store data sturecture just same as addresses.yml.
 type address struct {
 	Addresses struct {
