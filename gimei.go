@@ -45,9 +45,9 @@ func (i Item) Katakana() string {
 	return i[2]
 }
 
-// Hiragana return string of Item as romaji.
+// Romaji return string of Item as romaji.
 func (i Item) Romaji() string {
-	return i[3]
+	return strings.Title(i[3])
 }
 
 // Sex store Male or Female.
@@ -125,9 +125,9 @@ func (n *Name) Katakana() string {
 	return n.Last.Katakana() + " " + n.First.Katakana()
 }
 
-// Romaji return string of Name as katakana.
+// Romaji return string of Name as romaji.
 func (n *Name) Romaji() string {
-	return n.Last.Romaji() + " " + n.First.Romaji()
+	return n.First.Romaji() + " " + n.Last.Romaji()
 }
 
 // IsMale return true if he is male.
@@ -278,7 +278,8 @@ func FindNameByKatakana(katakana string) *Name {
 
 // FindNameByRomaji find Name by romaji.
 func FindNameByRomaji(romaji string) *Name {
-	return findNameByIndex(romaji, 3)
+	token := strings.SplitN(strings.ToLower(romaji), " ", 2)
+	return findNameByIndex(token[1] + " " + token[0], 3)
 }
 
 // address store data sturecture just same as addresses.yml.

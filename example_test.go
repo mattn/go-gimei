@@ -27,15 +27,15 @@ func ExampleGimeiName() {
 	// 小林 顕士
 	// こばやし けんじ
 	// コバヤシ ケンジ
-	// kobayashi kenji
+	// Kenji Kobayashi
 	// 小林
 	// こばやし
 	// コバヤシ
-	// kobayashi
+	// Kobayashi
 	// 顕士
 	// けんじ
 	// ケンジ
-	// kenji
+	// Kenji
 	// 男
 }
 
