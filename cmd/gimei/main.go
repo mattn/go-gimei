@@ -23,6 +23,8 @@ func doName(name *gimei.Name, args []string, sep string) {
 			ret = name.Hiragana() // さいとう はるな
 		case "katakana":
 			ret = name.Katakana() // サイトウ ハルナ
+		case "romaji":
+			ret = name.Romaji() // saito haruna
 		case "last-name":
 			ret = name.Last.String() // 斎藤
 		case "last-kanji":
@@ -31,6 +33,8 @@ func doName(name *gimei.Name, args []string, sep string) {
 			ret = name.Last.Hiragana() // さいとう
 		case "last-katakana":
 			ret = name.Last.Katakana() // サイトウ
+		case "last-romaji":
+			ret = name.Last.Romaji() // saito
 		case "first-name":
 			ret = name.First.String() // 陽菜
 		case "first-kanji":
@@ -39,6 +43,8 @@ func doName(name *gimei.Name, args []string, sep string) {
 			ret = name.First.Hiragana() // はるな
 		case "first-katakana":
 			ret = name.First.Katakana() // ハルナ
+		case "first-romaji":
+			ret = name.First.Romaji() // haruna
 		case "is-male":
 			ret = fmt.Sprint(name.IsMale()) // false
 		case "is-female":
@@ -121,14 +127,17 @@ func main() {
     kanji
     hiragana
     katakana
+    romaji
     last-name
     last-kanji
     last-hiragana
     last-katakana
+    last-romaji
     first-name
     first-kanji
     first-hiragana
     first-katakana
+    first-romaji
     is-male
     is-female
   
