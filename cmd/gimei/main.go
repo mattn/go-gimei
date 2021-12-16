@@ -111,14 +111,18 @@ func doAddress(address *gimei.Address, args []string, sep string) {
 func main() {
 	var t string
 	var sep string
+	var count bool
 	flag.StringVar(&t, "type", "name", "type of generator(name/male/female/address)")
 	flag.StringVar(&sep, "sep", ", ", "separator")
+	flag.BoolVar(&count, "count", false, "")
 	flag.Usage = func() {
 		fmt.Fprintf(os.Stderr, `Usage of gimei:
   -sep separator
         field separator (default ",")
   -type string
         type of generator(name/male/female/address) (default "name")
+  -count
+        display count of data
   -h, -help
         display this usage
 
@@ -161,6 +165,11 @@ func main() {
 `)
 	}
 	flag.Parse()
+
+	if count {
+		fmt.Println(gimei.CountData())
+		os.Exit(0)
+	}
 
 	switch t {
 	case "name":

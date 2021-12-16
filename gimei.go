@@ -2,6 +2,7 @@ package gimei
 
 import (
 	"embed"
+	"fmt"
 	"math/rand"
 	"strings"
 	"sync"
@@ -392,4 +393,21 @@ func FindAddressByHiragana(hiragana string) *Address {
 // FindAddressByKatakana find Address by katakana.
 func FindAddressByKatakana(katakana string) *Address {
 	return findAddressByIndex(katakana, 2)
+}
+
+func CountData() string {
+	onceName.Do(loadNames)
+	onceAddress.Do(loadAddresses)
+
+	var addr = &addresses.Addresses		
+	return fmt.Sprintf(`FirstName:
+  Male:       %5d 
+  Female:     %5d
+LastName:     %5d
+Adresses:
+  Prefecture: %5d
+  City:       %5d
+  Town:       %5d`,
+		len(names.FirstName.Male), len(names.FirstName.Female), len(names.LastName),
+		len(addr.Prefecture), len(addr.City), len(addr.Town))
 }
