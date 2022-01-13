@@ -234,6 +234,9 @@ func findNameByIndex(n string, i int) *Name {
 	if len(token) != 2 {
 		return nil
 	}
+	if i == 3 { // by romaji 
+		token[0], token[1] = strings.ToLower(token[1]), strings.ToLower(token[0])
+	}
 	for _, last := range names.LastName {
 		if last[i] != token[0] {
 			continue
@@ -279,8 +282,7 @@ func FindNameByKatakana(katakana string) *Name {
 
 // FindNameByRomaji find Name by romaji.
 func FindNameByRomaji(romaji string) *Name {
-	token := strings.SplitN(strings.ToLower(romaji), " ", 2)
-	return findNameByIndex(token[1] + " " + token[0], 3)
+	return findNameByIndex(romaji, 3)
 }
 
 // address store data sturecture just same as addresses.yml.
