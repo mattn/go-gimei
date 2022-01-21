@@ -234,7 +234,7 @@ func findNameByIndex(n string, i int) *Name {
 	if len(token) != 2 {
 		return nil
 	}
-	if i == 3 { // by romaji 
+	if i == 3 { // by romaji
 		token[0], token[1] = strings.ToLower(token[1]), strings.ToLower(token[0])
 	}
 	for _, last := range names.LastName {
@@ -401,7 +401,7 @@ func CountData() string {
 	onceName.Do(loadNames)
 	onceAddress.Do(loadAddresses)
 
-	var addr = &addresses.Addresses		
+	var addr = &addresses.Addresses
 	return fmt.Sprintf(`FirstName:
   Male:       %5d 
   Female:     %5d

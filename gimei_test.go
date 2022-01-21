@@ -66,7 +66,7 @@ func TestFindNameInvalidParams(t *testing.T) {
 	if gimei.FindNameByRomaji(target) != nil {
 		t.Errorf("FindNameByRomaji should return nil: %s", target)
 	}
-}	
+}
 
 func TestFindAddress(t *testing.T) {
 	var target string
