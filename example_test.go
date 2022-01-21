@@ -6,7 +6,7 @@ import (
 	"github.com/mattn/go-gimei"
 )
 
-func ExampleGimeiName() {
+func ExampleName() {
 	name := gimei.FindNameByKanji("小林 顕士")
 	fmt.Println(name)
 	fmt.Println(name.Kanji())
@@ -39,7 +39,7 @@ func ExampleGimeiName() {
 	// 男
 }
 
-func ExampleGimeiAddress() {
+func ExampleAddress() {
 	address := gimei.FindAddressByKanji("岡山県大島郡大和村稲木町")
 	fmt.Println(address)
 	fmt.Println(address.Kanji())
