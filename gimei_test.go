@@ -85,3 +85,12 @@ func TestFindAddress(t *testing.T) {
 		t.Errorf("FindAddressByKatakana not found: %q", target)
 	}
 }
+
+func TestCheckRaceCondition(t *testing.T) {
+	for i := 0; i < 5; i++ {
+		t.Run("", func(t *testing.T) {
+			t.Parallel()
+			gimei.NewName()
+		})
+	}
+}
