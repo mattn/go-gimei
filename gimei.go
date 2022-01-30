@@ -20,7 +20,7 @@ var (
 	onceName    sync.Once
 	onceAddress sync.Once
 	r           *rand.Rand
-	mu          = &sync.Mutex{}
+	mu          sync.Mutex
 )
 
 // Item take four figure for japanese. Kanji/Hiragana/Katakana/Romaji.
