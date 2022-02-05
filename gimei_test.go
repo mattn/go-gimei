@@ -85,3 +85,27 @@ func TestFindAddress(t *testing.T) {
 		t.Errorf("FindAddressByKatakana not found: %q", target)
 	}
 }
+
+func TestCheckRaceCondition(t *testing.T) {
+	for i := 0; i < 3; i++ {
+		t.Run(fmt.Sprintf("TestCheckRaceCondition: %v", i), func(t *testing.T) {
+			t.Parallel()
+			gimei.NewName()
+			gimei.NewDog()
+			gimei.NewCat()
+			gimei.NewMale()
+			gimei.NewFemale()
+			gimei.NewMaleDog()
+			gimei.NewFemaleDog()
+			gimei.NewMaleCat()
+			gimei.NewFemaleCat()
+			gimei.NewAddress()
+			gimei.NewPrefecture()
+			gimei.NewTown()
+			gimei.NewCity()
+			gimei.FindNameByKanji("小林 顕士")
+			gimei.FindAddressByKanji("岡山県大島郡大和村稲木町")
+			gimei.CountData()
+		})
+	}
+}

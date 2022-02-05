@@ -20,6 +20,7 @@ var (
 	onceName    sync.Once
 	onceAddress sync.Once
 	r           *rand.Rand
+	mu          sync.Mutex
 )
 
 // Item take four figure for japanese. Kanji/Hiragana/Katakana/Romaji.
@@ -143,16 +144,30 @@ func (n *Name) IsFemale() bool {
 
 // NewName return new instance of person.
 func NewName() *Name {
+	mu.Lock()
+	defer mu.Unlock()
+
 	onceName.Do(loadNames)
 	if r.Int()%2 == 0 {
-		return NewMale()
+		return &Name{
+			First: names.FirstName.Male[r.Int()%len(names.FirstName.Male)],
+			Last:  names.LastName[r.Int()%len(names.LastName)],
+			Sex:   Male,
+		}
 	} else {
-		return NewFemale()
+		return &Name{
+			First: names.FirstName.Female[r.Int()%len(names.FirstName.Female)],
+			Last:  names.LastName[r.Int()%len(names.LastName)],
+			Sex:   Female,
+		}
 	}
 }
 
 // NewName return new instance of person.
 func NewDog() *Name {
+	mu.Lock()
+	defer mu.Unlock()
+
 	onceName.Do(loadNames)
 	return &Name{
 		First: names.FirstName.Animal[r.Int()%len(names.FirstName.Animal)],
@@ -161,6 +176,9 @@ func NewDog() *Name {
 }
 
 func NewCat() *Name {
+	mu.Lock()
+	defer mu.Unlock()
+
 	onceName.Do(loadNames)
 	return &Name{
 		First: names.FirstName.Animal[r.Int()%len(names.FirstName.Animal)],
@@ -170,6 +188,9 @@ func NewCat() *Name {
 
 // NewMale return new instance of person that is male.
 func NewMale() *Name {
+	mu.Lock()
+	defer mu.Unlock()
+
 	onceName.Do(loadNames)
 	return &Name{
 		First: names.FirstName.Male[r.Int()%len(names.FirstName.Male)],
@@ -180,6 +201,9 @@ func NewMale() *Name {
 
 // NewFemale return new instance of person that is female.
 func NewFemale() *Name {
+	mu.Lock()
+	defer mu.Unlock()
+
 	onceName.Do(loadNames)
 	return &Name{
 		First: names.FirstName.Female[r.Int()%len(names.FirstName.Female)],
@@ -190,6 +214,9 @@ func NewFemale() *Name {
 
 // NewMaleDog return new instance of person that is dog.
 func NewMaleDog() *Name {
+	mu.Lock()
+	defer mu.Unlock()
+
 	onceName.Do(loadNames)
 	return &Name{
 		First: names.FirstName.Male[r.Int()%len(names.FirstName.Male)],
@@ -200,6 +227,9 @@ func NewMaleDog() *Name {
 
 // NewFemaleCat return new instance of person that is dog.
 func NewFemaleDog() *Name {
+	mu.Lock()
+	defer mu.Unlock()
+
 	onceName.Do(loadNames)
 	return &Name{
 		First: names.FirstName.Female[r.Int()%len(names.FirstName.Female)],
@@ -210,6 +240,9 @@ func NewFemaleDog() *Name {
 
 // NewMaleCat return new instance of person that is dog.
 func NewMaleCat() *Name {
+	mu.Lock()
+	defer mu.Unlock()
+
 	onceName.Do(loadNames)
 	return &Name{
 		First: names.FirstName.Male[r.Int()%len(names.FirstName.Male)],
@@ -220,6 +253,9 @@ func NewMaleCat() *Name {
 
 // NewFemaleCat return new instance of person that is dog.
 func NewFemaleCat() *Name {
+	mu.Lock()
+	defer mu.Unlock()
+
 	onceName.Do(loadNames)
 	return &Name{
 		First: names.FirstName.Female[r.Int()%len(names.FirstName.Female)],
@@ -341,18 +377,27 @@ func NewAddress() *Address {
 
 // NewPrefecture return new instance of prefecture.
 func NewPrefecture() Item {
+	mu.Lock()
+	defer mu.Unlock()
+
 	onceAddress.Do(loadAddresses)
 	return addresses.Addresses.Prefecture[r.Int()%len(addresses.Addresses.Prefecture)]
 }
 
 // NewTown return new instance of town.
 func NewTown() Item {
+	mu.Lock()
+	defer mu.Unlock()
+
 	onceAddress.Do(loadAddresses)
 	return addresses.Addresses.Town[r.Int()%len(addresses.Addresses.Town)]
 }
 
 // NewCity return new instance of city.
 func NewCity() Item {
+	mu.Lock()
+	defer mu.Unlock()
+
 	onceAddress.Do(loadAddresses)
 	return addresses.Addresses.City[r.Int()%len(addresses.Addresses.City)]
 }
