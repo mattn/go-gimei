@@ -97,13 +97,10 @@ $ gimei [OPTIONS] [ARGS]
 #### OPTIONS
 
 ```
--type string
-    display instead of a mixed-gender personal name: 'male', 'female' or 'address'.
-    if ARGS is omitted, display it in kanji.
 -sep separator
     field separator.
--count
-    display count of data.
+-n
+    N records.
 -h, -help
     display usage.
 ```    
@@ -159,9 +156,9 @@ to display city:
 ```bash
 $ gimei
 古賀 正浩
-$ gimei kanji katakana
+$ gimei name:kanji name:katakana
 中村 紳一, ナカムラ シンイチ
-$ gimei -type address -sep '/' prefecture-kanji town-kanji
+$ gimei -sep '/' address:prefecture-kanji address:town-kanji
 滋賀県/田所町
 ```
 
