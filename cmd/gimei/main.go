@@ -96,8 +96,6 @@ func main() {
 		fmt.Fprintf(os.Stderr, `Usage of gimei:
   -sep separator
         field separator (default ",")
-  -type string
-        type of generator(name/male/female/address) (default "name")
   -count
         display count of data
   -h, -help
@@ -139,6 +137,12 @@ func main() {
     city-kanji
     city-hiragana
     city-katakana
+
+  Example:
+    $ gimei -n 3 name:name name:hiragana address:name
+    鈴木 真里緒, すずき まりお, 山口県新居浜市森川町
+    宮原 秋南, みやはら あきな, 大阪府枝幸郡浜頓別町豊郷
+    大内 亮佳, おおうち あきか, 福島県磯城郡田原本町高清水上佐野
 `)
 	}
 	flag.Parse()
