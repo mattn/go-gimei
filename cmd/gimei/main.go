@@ -4,123 +4,98 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/mattn/go-gimei"
 )
 
-func doName(name *gimei.Name, args []string, sep string) {
-	if len(args) == 0 {
-		args = []string{"name"}
-	}
-	for i, arg := range args {
-		var ret string
-		switch arg {
-		case "name":
-			ret = name.String() // 斎藤 陽菜
-		case "kanji":
-			ret = name.Kanji() // 斎藤 陽菜
-		case "hiragana":
-			ret = name.Hiragana() // さいとう はるな
-		case "katakana":
-			ret = name.Katakana() // サイトウ ハルナ
-		case "romaji":
-			ret = name.Romaji() // Haruna Saito
-		case "last-name":
-			ret = name.Last.String() // 斎藤
-		case "last-kanji":
-			ret = name.Last.Kanji() // 斎藤
-		case "last-hiragana":
-			ret = name.Last.Hiragana() // さいとう
-		case "last-katakana":
-			ret = name.Last.Katakana() // サイトウ
-		case "last-romaji":
-			ret = name.Last.Romaji() // Saito
-		case "first-name":
-			ret = name.First.String() // 陽菜
-		case "first-kanji":
-			ret = name.First.Kanji() // 陽菜
-		case "first-hiragana":
-			ret = name.First.Hiragana() // はるな
-		case "first-katakana":
-			ret = name.First.Katakana() // ハルナ
-		case "first-romaji":
-			ret = name.First.Romaji() // Haruna
-		case "is-male":
-			ret = fmt.Sprint(name.IsMale()) // false
-		case "is-female":
-			ret = fmt.Sprint(name.IsFemale()) // false
-		}
-		if ret != "" {
-			if i > 0 {
-				fmt.Print(sep)
-			}
-			fmt.Print(ret)
-		}
+func doName(name *gimei.Name, arg string) string {
+	switch arg {
+	case "kanji":
+		return name.Kanji() // 斎藤 陽菜
+	case "hiragana":
+		return name.Hiragana() // さいとう はるな
+	case "katakana":
+		return name.Katakana() // サイトウ ハルナ
+	case "romaji":
+		return name.Romaji() // Haruna Saito
+	case "last-name":
+		return name.Last.String() // 斎藤
+	case "last-kanji":
+		return name.Last.Kanji() // 斎藤
+	case "last-hiragana":
+		return name.Last.Hiragana() // さいとう
+	case "last-katakana":
+		return name.Last.Katakana() // サイトウ
+	case "last-romaji":
+		return name.Last.Romaji() // Saito
+	case "first-name":
+		return name.First.String() // 陽菜
+	case "first-kanji":
+		return name.First.Kanji() // 陽菜
+	case "first-hiragana":
+		return name.First.Hiragana() // はるな
+	case "first-katakana":
+		return name.First.Katakana() // ハルナ
+	case "first-romaji":
+		return name.First.Romaji() // Haruna
+	case "is-male":
+		return fmt.Sprint(name.IsMale()) // false
+	case "is-female":
+		return fmt.Sprint(name.IsFemale()) // false
+	default:
+		return name.String() // 斎藤 陽菜
 	}
 }
 
-func doAddress(address *gimei.Address, args []string, sep string) {
-	if len(args) == 0 {
-		args = []string{"name"}
-	}
-	for i, arg := range args {
-		var ret string
-		switch arg {
-		case "name":
-			ret = address.String() // 岡山県大島郡大和村稲木町
-		case "kanji":
-			ret = address.Kanji() // 岡山県大島郡大和村稲木町
-		case "hiragana":
-			ret = address.Hiragana() // おかやまけんおおしまぐんやまとそんいなぎちょう
-		case "katakana":
-			ret = address.Katakana() // オカヤマケンオオシマグンヤマトソンイナギチョウ
-		case "prefecture-name":
-			ret = address.Prefecture.String() // 岡山県
-		case "prefecture-kanji":
-			ret = address.Prefecture.Kanji() // 岡山県
-		case "prefecture-hiragana":
-			ret = address.Prefecture.Hiragana() // おかやまけん
-		case "prefecture-katakana":
-			ret = address.Prefecture.Katakana() // オカヤマケン
-		case "town-name":
-			ret = address.Town.String() // 大島郡大和村
-		case "town-kanji":
-			ret = address.Town.Kanji() // 大島郡大和村
-		case "town-hiragana":
-			ret = address.Town.Hiragana() // おおしまぐんやまとそん
-		case "town-katakana":
-			ret = address.Town.Katakana() // オオシマグンヤマトソン
-		case "city-name":
-			ret = address.City.String() // 稲木町
-		case "city-kanji":
-			ret = address.City.Kanji() // 稲木町
-		case "city-hiragana":
-			ret = address.City.Hiragana() // いなぎちょう
-		case "city-katakana":
-			ret = address.City.Katakana() // イナギチョウ
-		}
-		if ret != "" {
-			if i > 0 {
-				fmt.Print(sep)
-			}
-			fmt.Print(ret)
-		}
+func doAddress(address *gimei.Address, arg string) string {
+	switch arg {
+	case "kanji":
+		return address.Kanji() // 岡山県大島郡大和村稲木町
+	case "hiragana":
+		return address.Hiragana() // おかやまけんおおしまぐんやまとそんいなぎちょう
+	case "katakana":
+		return address.Katakana() // オカヤマケンオオシマグンヤマトソンイナギチョウ
+	case "prefecture-name":
+		return address.Prefecture.String() // 岡山県
+	case "prefecture-kanji":
+		return address.Prefecture.Kanji() // 岡山県
+	case "prefecture-hiragana":
+		return address.Prefecture.Hiragana() // おかやまけん
+	case "prefecture-katakana":
+		return address.Prefecture.Katakana() // オカヤマケン
+	case "town-name":
+		return address.Town.String() // 大島郡大和村
+	case "town-kanji":
+		return address.Town.Kanji() // 大島郡大和村
+	case "town-hiragana":
+		return address.Town.Hiragana() // おおしまぐんやまとそん
+	case "town-katakana":
+		return address.Town.Katakana() // オオシマグンヤマトソン
+	case "city-name":
+		return address.City.String() // 稲木町
+	case "city-kanji":
+		return address.City.Kanji() // 稲木町
+	case "city-hiragana":
+		return address.City.Hiragana() // いなぎちょう
+	case "city-katakana":
+		return address.City.Katakana() // イナギチョウ
+	default:
+		return address.String() // 岡山県大島郡大和村稲木町
 	}
 }
 
 func main() {
-	var t string
 	var sep string
 	var count bool
-	flag.StringVar(&t, "type", "name", "type of generator(name/male/female/address)")
+	var n int
+	flag.IntVar(&n, "n", 1, "N records")
 	flag.StringVar(&sep, "sep", ", ", "separator")
 	flag.BoolVar(&count, "count", false, "")
 	flag.Usage = func() {
 		fmt.Fprintf(os.Stderr, `Usage of gimei:
   -sep separator
         field separator (default ",")
-  -type string
-        type of generator(name/male/female/address) (default "name")
   -count
         display count of data
   -h, -help
@@ -162,6 +137,12 @@ func main() {
     city-kanji
     city-hiragana
     city-katakana
+
+  Example:
+    $ gimei -n 3 name:name name:hiragana address:name
+    鈴木 真里緒, すずき まりお, 山口県新居浜市森川町
+    宮原 秋南, みやはら あきな, 大阪府枝幸郡浜頓別町豊郷
+    大内 亮佳, おおうち あきか, 福島県磯城郡田原本町高清水上佐野
 `)
 	}
 	flag.Parse()
@@ -171,22 +152,49 @@ func main() {
 		os.Exit(0)
 	}
 
-	switch t {
-	case "name":
-		doName(gimei.NewName(), flag.Args(), sep)
-	case "male":
-		doName(gimei.NewMale(), flag.Args(), sep)
-	case "female":
-		doName(gimei.NewFemale(), flag.Args(), sep)
-	case "address":
-		doAddress(gimei.NewAddress(), flag.Args(), sep)
-	case "dog":
-		doName(gimei.NewDog(), flag.Args(), sep)
-	case "cat":
-		doName(gimei.NewCat(), flag.Args(), sep)
-	default:
-		flag.Usage()
-		os.Exit(2)
+	args := flag.Args()
+	if len(args) == 0 {
+		args = []string{"name:name"}
 	}
-	fmt.Println()
+
+	for i := 0; i < n; i++ {
+		gimeiName := gimei.NewName()
+		gimeiMale := gimei.NewMale()
+		gimeiFemale := gimei.NewFemale()
+		gimeiAddress := gimei.NewAddress()
+		gimeiDog := gimei.NewDog()
+		gimeiCat := gimei.NewCat()
+		for i, arg := range args {
+			tokens := strings.SplitN(arg, ":", 2)
+			if len(tokens) == 0 {
+				flag.Usage()
+				os.Exit(2)
+			} else if len(tokens) == 1 {
+				tokens = append(tokens, "name")
+			}
+			var result string
+			switch tokens[0] {
+			case "name":
+				result = doName(gimeiName, tokens[1])
+			case "male":
+				result = doName(gimeiMale, tokens[1])
+			case "female":
+				result = doName(gimeiFemale, tokens[1])
+			case "address":
+				result = doAddress(gimeiAddress, tokens[1])
+			case "dog":
+				result = doName(gimeiDog, tokens[1])
+			case "cat":
+				result = doName(gimeiCat, tokens[1])
+			default:
+				flag.Usage()
+				os.Exit(2)
+			}
+			if i > 0 {
+				fmt.Print(sep)
+			}
+			fmt.Print(result)
+		}
+		fmt.Println()
+	}
 }
