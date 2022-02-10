@@ -88,70 +88,84 @@ fmt.Println(gimei.NewAddress()) // 佐賀県斜里郡斜里町浄法寺町樋口
 
 ```
 
-### CLI Usage
+## CLI Usage
 
 ```bash
 $ gimei [OPTIONS] [ARGS]
 ```
 
-#### OPTIONS
+Omitting ARGS is equivalent to specifying **name:kanji**.
+
+### OPTIONS
 
 ```
--sep separator
-    field separator.
--n
-    N records.
+-sep string
+    specify string used to separate fields.
+-n number
+    display number record(s).
+-count
+    display records read from embedded yaml files and exit.
 -h, -help
-    display usage.
-```    
+    display usage and exit.
+```
 
-#### ARGS
+### ARGS
 
-Arguments for a personal name:
+Argument for a personal name:
 
+```
+name|male|female[:NAME_DISPLAY_OPTION]
+```
+
+NAME_DISPLAY_OPTION list
 ```
 to display full name:
-    'kanji',
+    'kanji', (is equivalent to omitting NAME_DISPLAY_OPTION)
     'hiragana',
-    'katakana'
+    'katakana',
     'romaji'
 to display last name:
     'last-kanji',
     'last-hiragana',
-    'last-katakana'
+    'last-katakana',
     'last-romaji'
 to display first name:
     'first-kanji',
     'first-hiragana',
-    'first-katakana'
+    'first-katakana',
     'first-romaji'
 to display which it is male/female:
     'is-male',
     'is-female'
 ```
 
-Arguments for an address:
+Argument for an address:
 
 ```
+address[:ADDRESS_DISPLAY_OPTION]
+```
+
+ADDRESS_DISPLAY_OPTION list
+```
 to display address:
-    'kanji'
-    'hiragana'
+    'kanji', (is eqivalent ot omitting ADDRESS_DISPLAY_OPTION)
+    'hiragana',
     'katakana'
 to display prefecture:
-    'prefecture-kanji'
-    'prefecture-hiragana'
+    'prefecture-kanji',
+    'prefecture-hiragana',
     'prefecture-katakana'
 to display town:
-    'town-kanji'
-    'town-hiragana'
+    'town-kanji',
+    'town-hiragana',
     'town-katakana'
 to display city:
-    'city-kanji'
-    'city-hiragana'
+    'city-kanji',
+    'city-hiragana',
     'city-katakana'
 ```
 
-#### EXAMPLES
+### EXAMPLES
 
 ```bash
 $ gimei
@@ -160,6 +174,10 @@ $ gimei name:kanji name:katakana
 中村 紳一, ナカムラ シンイチ
 $ gimei -sep '/' address:prefecture-kanji address:town-kanji
 滋賀県/田所町
+$ gimei -n 3 name name:hiragana
+白川 彰花, しらかわ あきか
+関根 勇一, せきね ゆういち
+大場 星良, おおば きらら
 ```
 
 ## Requirements
