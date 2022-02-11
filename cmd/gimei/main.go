@@ -93,13 +93,16 @@ func main() {
 	flag.StringVar(&sep, "sep", ", ", "separator")
 	flag.BoolVar(&count, "count", false, "")
 	flag.Usage = func() {
-		fmt.Fprintf(os.Stderr, `Usage of gimei:
-  -sep separator
-        field separator (default ",")
+		fmt.Fprintf(os.Stderr, `Usage: gimei [OPTIONS] [ARGS]
+
+  -sep string
+        specify string used to separate fields(default: ", ")
+  -n number
+        display number record(s)
   -count
-        display count of data
+        display records read from embedded yaml files and exit
   -h, -help
-        display this usage
+        display this usage and exit
 
   Arguments for name/male/female:
     name
