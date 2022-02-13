@@ -100,7 +100,7 @@ Omitting ARGS is equivalent to specifying **name:kanji**.
 
 ```
 -sep string
-    specify string used to separate fields.
+    specify string used to separate fields(default: ", ").
 -n number
     display number record(s).
 -count
