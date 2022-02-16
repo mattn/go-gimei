@@ -42,7 +42,7 @@ func (i Item) Hiragana() string {
 	return i[1]
 }
 
-// Hiragana return string of Item as katakana.
+// Katakana return string of Item as katakana.
 func (i Item) Katakana() string {
 	return i[2]
 }
@@ -66,6 +66,7 @@ func (s Sex) String() string {
 	return "？"
 }
 
+// list of sex
 const (
 	Male   Sex = iota + 1 // 男
 	Female                // 女
@@ -94,6 +95,7 @@ func init() {
 	r = rand.New(rand.NewSource(time.Now().UnixNano()))
 }
 
+// SetRandom set a pointer to rand.Rand that uses to generate random values.
 func SetRandom(rnd *rand.Rand) {
 	r = rnd
 }
@@ -122,7 +124,7 @@ func (n *Name) Hiragana() string {
 	return n.Last.Hiragana() + " " + n.First.Hiragana()
 }
 
-// Hiragana return string of Name as katakana.
+// Katakana return string of Name as katakana.
 func (n *Name) Katakana() string {
 	return n.Last.Katakana() + " " + n.First.Katakana()
 }
@@ -137,7 +139,7 @@ func (n *Name) IsMale() bool {
 	return n.Sex == Male
 }
 
-// IsMale return true if she is female.
+// IsFemale return true if she is female.
 func (n *Name) IsFemale() bool {
 	return n.Sex == Female
 }
