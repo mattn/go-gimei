@@ -45,9 +45,27 @@ func ExampleAddress() {
 	fmt.Println(address.Kanji())
 	fmt.Println(address.Hiragana())
 	fmt.Println(address.Katakana())
+	fmt.Println(address.Prefecture.Kanji())
+	fmt.Println(address.Prefecture.Hiragana())
+	fmt.Println(address.Prefecture.Katakana())
+	fmt.Println(address.City.Kanji())
+	fmt.Println(address.City.Hiragana())
+	fmt.Println(address.City.Katakana())
+	fmt.Println(address.Town.Kanji())
+	fmt.Println(address.Town.Hiragana())
+	fmt.Println(address.Town.Katakana())
 	// Output:
 	// 岡山県大島郡大和村稲木町
 	// 岡山県大島郡大和村稲木町
 	// おかやまけんおおしまぐんやまとそんいなぎちょう
 	// オカヤマケンオオシマグンヤマトソンイナギチョウ
+	// 岡山県
+	// おかやまけん
+	// オカヤマケン
+	// 大島郡大和村
+	// おおしまぐんやまとそん
+	// オオシマグンヤマトソン
+	// 稲木町
+	// いなぎちょう
+	// イナギチョウ
 }

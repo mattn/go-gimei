@@ -86,6 +86,19 @@ func TestFindAddress(t *testing.T) {
 	}
 }
 
+// Prefecture/City/Town.Romaji() should return empty string
+func TestEmptyRomaji(t *testing.T) {
+    if gimei.NewPrefecture().Romaji() != "" {
+        t.Errorf("Prefecture.Romaji() should return empty string")
+    }
+    if gimei.NewCity().Romaji() != "" {
+        t.Errorf("City.Romaji() should return empty string")
+    }
+    if gimei.NewTown().Romaji() != "" {
+        t.Errorf("Town.Romaji() should return empty string")
+    }
+}
+
 func TestCheckRaceCondition(t *testing.T) {
 	for i := 0; i < 3; i++ {
 		t.Run(fmt.Sprintf("TestCheckRaceCondition: %v", i), func(t *testing.T) {
