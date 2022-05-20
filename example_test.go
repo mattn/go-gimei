@@ -45,9 +45,13 @@ func ExampleAddress() {
 	fmt.Println(address.Kanji())
 	fmt.Println(address.Hiragana())
 	fmt.Println(address.Katakana())
+	fmt.Println(address.City)
+	fmt.Println(address.Town)	
 	// Output:
 	// 岡山県大島郡大和村稲木町
 	// 岡山県大島郡大和村稲木町
 	// おかやまけんおおしまぐんやまとそんいなぎちょう
 	// オカヤマケンオオシマグンヤマトソンイナギチョウ
+	// 大島郡大和村
+	// 稲木町	
 }

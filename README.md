@@ -56,14 +56,14 @@ func main() {
 	fmt.Println(address.Prefecture.Kanji())    // 岡山県
 	fmt.Println(address.Prefecture.Hiragana()) // おかやまけん
 	fmt.Println(address.Prefecture.Katakana()) // オカヤマケン
-	fmt.Println(address.Town)                  // 大島郡大和村
-	fmt.Println(address.Town.Kanji())          // 大島郡大和村
-	fmt.Println(address.Town.Hiragana())       // おおしまぐんやまとそん
-	fmt.Println(address.Town.Katakana())       // オオシマグンヤマトソン
-	fmt.Println(address.City)                  // 稲木町
-	fmt.Println(address.City.Kanji())          // 稲木町
-	fmt.Println(address.City.Hiragana())       // いなぎちょう
-	fmt.Println(address.City.Katakana())       // イナギチョウ
+	fmt.Println(address.City)                  // 大島郡大和村
+	fmt.Println(address.City.Kanji())          // 大島郡大和村
+	fmt.Println(address.City.Hiragana())       // おおしまぐんやまとそん
+	fmt.Println(address.City.Katakana())       // オオシマグンヤマトソン
+	fmt.Println(address.Town)                  // 稲木町
+	fmt.Println(address.Town.Kanji())          // 稲木町
+	fmt.Println(address.Town.Hiragana())       // いなぎちょう
+	fmt.Println(address.Town.Katakana())       // イナギチョウ
 
 	prefecture := gimei.NewPrefecture()
 	fmt.Println(prefecture) // 青森県
@@ -155,14 +155,14 @@ to display prefecture:
     'prefecture-kanji',
     'prefecture-hiragana',
     'prefecture-katakana'
-to display town:
-    'town-kanji',
-    'town-hiragana',
-    'town-katakana'
 to display city:
     'city-kanji',
     'city-hiragana',
     'city-katakana'
+to display town:
+    'town-kanji',
+    'town-hiragana',
+    'town-katakana'
 ```
 
 ### EXAMPLES
