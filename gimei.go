@@ -9,6 +9,8 @@ import (
 	"time"
 
 	"gopkg.in/yaml.v2"
+	"golang.org/x/text/cases"
+	"golang.org/x/text/language"
 )
 
 var (
@@ -49,7 +51,7 @@ func (i Item) Katakana() string {
 
 // Romaji return string of Item as romaji.
 func (i Item) Romaji() string {
-	return strings.Title(i[3])
+	return cases.Title(language.Und, cases.NoLower).String(i[3])
 }
 
 // Sex store Male or Female.
