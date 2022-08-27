@@ -44,11 +44,11 @@ func TestFindName(t *testing.T) {
 
 	target = name.Kanji()
 	if gimei.FindNameByKanji(target) == nil {
-		t.Errorf("FindNameByKanji not found %s", target)
+		t.Errorf("FindNameByKanji not found: %s", target)
 	}
 	target = name.Hiragana()
 	if gimei.FindNameByHiragana(target) == nil {
-		t.Errorf("FindNameByHiragana not found %s", target)
+		t.Errorf("FindNameByHiragana not found: %s", target)
 	}
 	target = name.Katakana()
 	if gimei.FindNameByKatakana(target) == nil {
@@ -74,16 +74,29 @@ func TestFindAddress(t *testing.T) {
 
 	target = addr.Kanji()
 	if gimei.FindAddressByKanji(target) == nil {
-		t.Errorf("FindAddressByKanji not found %s", target)
+		t.Errorf("FindAddressByKanji not found: %s", target)
 	}
 	target = addr.Hiragana()
 	if gimei.FindAddressByHiragana(target) == nil {
-		t.Errorf("FindAddressByHiragana not found %s", target)
+		t.Errorf("FindAddressByHiragana not found: %s", target)
 	}
 	target = addr.Katakana()
 	if gimei.FindAddressByKatakana(target) == nil {
 		t.Errorf("FindAddressByKatakana not found: %q", target)
 	}
+}
+
+// Prefecture/City/Town.Romaji() should return empty string
+func TestEmptyRomaji(t *testing.T) {
+    if gimei.NewPrefecture().Romaji() != "" {
+        t.Errorf("Prefecture.Romaji() should return empty string")
+    }
+    if gimei.NewCity().Romaji() != "" {
+        t.Errorf("City.Romaji() should return empty string")
+    }
+    if gimei.NewTown().Romaji() != "" {
+        t.Errorf("Town.Romaji() should return empty string")
+    }
 }
 
 func TestCheckRaceCondition(t *testing.T) {
