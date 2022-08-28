@@ -168,7 +168,7 @@ func NewName() *Name {
 	}
 }
 
-// NewName return new instance of person.
+// NewDog return new instance of person whose last name begins "inu".
 func NewDog() *Name {
 	mu.Lock()
 	defer mu.Unlock()
@@ -180,6 +180,7 @@ func NewDog() *Name {
 	}
 }
 
+// NewCat return new instance of person whose last name begins "neko".
 func NewCat() *Name {
 	mu.Lock()
 	defer mu.Unlock()
@@ -217,7 +218,7 @@ func NewFemale() *Name {
 	}
 }
 
-// NewMaleDog return new instance of person that is dog.
+// NewMaleDog return new instance of male person whose last name begins "inu".
 func NewMaleDog() *Name {
 	mu.Lock()
 	defer mu.Unlock()
@@ -230,7 +231,7 @@ func NewMaleDog() *Name {
 	}
 }
 
-// NewFemaleCat return new instance of person that is dog.
+// NewFemaleDog return new instance of female person whose last name begins "inu".
 func NewFemaleDog() *Name {
 	mu.Lock()
 	defer mu.Unlock()
@@ -243,7 +244,7 @@ func NewFemaleDog() *Name {
 	}
 }
 
-// NewMaleCat return new instance of person that is dog.
+// NewMaleCat return new instance of male person whose last name begins "neko".
 func NewMaleCat() *Name {
 	mu.Lock()
 	defer mu.Unlock()
@@ -256,7 +257,7 @@ func NewMaleCat() *Name {
 	}
 }
 
-// NewFemaleCat return new instance of person that is dog.
+// NewFemaleCat return new instance of female person whose last name begins "neko".
 func NewFemaleCat() *Name {
 	mu.Lock()
 	defer mu.Unlock()
