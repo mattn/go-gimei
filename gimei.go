@@ -9,6 +9,8 @@ import (
 	"time"
 
 	"gopkg.in/yaml.v2"
+	"golang.org/x/text/cases"
+	"golang.org/x/text/language"
 )
 
 var (
@@ -52,7 +54,7 @@ func (i Item) Romaji() string {
 	if len(i) <= 3 {
 		return ""
 	}
-	return strings.Title(i[3])
+	return cases.Title(language.Und, cases.NoLower).String(i[3])
 }
 
 // Sex store Male or Female.
