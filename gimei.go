@@ -51,6 +51,9 @@ func (i Item) Katakana() string {
 
 // Romaji return string of Item as romaji.
 func (i Item) Romaji() string {
+	if len(i) <= 3 {
+		return ""
+	}
 	return cases.Title(language.Und, cases.NoLower).String(i[3])
 }
 
