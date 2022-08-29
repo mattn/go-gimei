@@ -64,22 +64,22 @@ func doAddress(address *gimei.Address, arg string) string {
 		return address.Prefecture.Hiragana() // おかやまけん
 	case "prefecture-katakana":
 		return address.Prefecture.Katakana() // オカヤマケン
-	case "town-name":
-		return address.Town.String() // 大島郡大和村
-	case "town-kanji":
-		return address.Town.Kanji() // 大島郡大和村
-	case "town-hiragana":
-		return address.Town.Hiragana() // おおしまぐんやまとそん
-	case "town-katakana":
-		return address.Town.Katakana() // オオシマグンヤマトソン
 	case "city-name":
-		return address.City.String() // 稲木町
+		return address.City.String() // 大島郡大和村
 	case "city-kanji":
-		return address.City.Kanji() // 稲木町
+		return address.City.Kanji() // 大島郡大和村
 	case "city-hiragana":
-		return address.City.Hiragana() // いなぎちょう
+		return address.City.Hiragana() // おおしまぐんやまとそん
 	case "city-katakana":
-		return address.City.Katakana() // イナギチョウ
+		return address.City.Katakana() // オオシマグンヤマトソン
+	case "town-name":
+		return address.Town.String() // 稲木町
+	case "town-kanji":
+		return address.Town.Kanji() // 稲木町
+	case "town-hiragana":
+		return address.Town.Hiragana() // いなぎちょう
+	case "town-katakana":
+		return address.Town.Katakana() // イナギチョウ
 	default:
 		return address.String() // 岡山県大島郡大和村稲木町
 	}
@@ -132,14 +132,14 @@ func main() {
     prefecture-kanji
     prefecture-hiragana
     prefecture-katakana
-    town-name
-    town-kanji
-    town-hiragana
-    town-katakana
     city-name
     city-kanji
     city-hiragana
     city-katakana
+    town-name
+    town-kanji
+    town-hiragana
+    town-katakana
 
   Example:
     $ gimei -n 3 name:name name:hiragana address:name
