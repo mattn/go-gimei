@@ -161,12 +161,11 @@ func main() {
 	}
 
 	for i := 0; i < n; i++ {
-		gimeiName := gimei.NewName()
-		gimeiMale := gimei.NewMale()
-		gimeiFemale := gimei.NewFemale()
-		gimeiAddress := gimei.NewAddress()
-		gimeiDog := gimei.NewDog()
-		gimeiCat := gimei.NewCat()
+		var (
+			gimeiName, gimeiMale, gimeiFemale *gimei.Name    = nil, nil, nil
+			gimeiAddress                      *gimei.Address = nil
+			gimeiDog, gimeiCat                *gimei.Name    = nil, nil
+		)
 		for i, arg := range args {
 			tokens := strings.SplitN(arg, ":", 2)
 			if len(tokens) == 0 {
@@ -178,16 +177,34 @@ func main() {
 			var result string
 			switch tokens[0] {
 			case "name":
+				if gimeiName == nil {
+					gimeiName = gimei.NewName()
+				}
 				result = doName(gimeiName, tokens[1])
 			case "male":
+				if gimeiMale == nil {
+					gimeiMale = gimei.NewMale()
+				}
 				result = doName(gimeiMale, tokens[1])
 			case "female":
+				if gimeiFemale == nil {
+					gimeiFemale = gimei.NewFemale()
+				}
 				result = doName(gimeiFemale, tokens[1])
 			case "address":
+				if gimeiAddress == nil {
+					gimeiAddress = gimei.NewAddress()
+				}
 				result = doAddress(gimeiAddress, tokens[1])
 			case "dog":
+				if gimeiDog == nil {
+					gimeiDog = gimei.NewDog()
+				}
 				result = doName(gimeiDog, tokens[1])
 			case "cat":
+				if gimeiCat == nil {
+					gimeiCat = gimei.NewCat()
+				}
 				result = doName(gimeiCat, tokens[1])
 			default:
 				flag.Usage()
