@@ -88,15 +88,15 @@ func TestFindAddress(t *testing.T) {
 
 // Prefecture/City/Town.Romaji() should return empty string
 func TestEmptyRomaji(t *testing.T) {
-    if gimei.NewPrefecture().Romaji() != "" {
-        t.Errorf("Prefecture.Romaji() should return empty string")
-    }
-    if gimei.NewCity().Romaji() != "" {
-        t.Errorf("City.Romaji() should return empty string")
-    }
-    if gimei.NewTown().Romaji() != "" {
-        t.Errorf("Town.Romaji() should return empty string")
-    }
+	if gimei.NewPrefecture().Romaji() != "" {
+		t.Errorf("Prefecture.Romaji() should return empty string")
+	}
+	if gimei.NewCity().Romaji() != "" {
+		t.Errorf("City.Romaji() should return empty string")
+	}
+	if gimei.NewTown().Romaji() != "" {
+		t.Errorf("Town.Romaji() should return empty string")
+	}
 }
 
 func TestCheckRaceCondition(t *testing.T) {
@@ -116,9 +116,36 @@ func TestCheckRaceCondition(t *testing.T) {
 			gimei.NewPrefecture()
 			gimei.NewTown()
 			gimei.NewCity()
+			gimei.NewPostalCode()
 			gimei.FindNameByKanji("小林 顕士")
 			gimei.FindAddressByKanji("岡山県大島郡大和村稲木町")
 			gimei.CountData()
 		})
+	}
+}
+
+func TestPostalCode(t *testing.T) {
+	gimei.SetRandom(rand.New(rand.NewSource(42)))
+
+	postal := gimei.NewPostalCode()
+	if postal == nil {
+		t.Fatal("NewPostalCode should not return nil")
+	}
+
+	if postal.Kanji() == "" {
+		t.Fatal("PostalCode.Kanji() should not return empty string")
+	}
+
+	if postal.String() == "" {
+		t.Fatal("PostalCode.String() should not return empty string")
+	}
+
+	// Test deterministic result
+	gimei.SetRandom(rand.New(rand.NewSource(42)))
+	postal1 := gimei.NewPostalCode()
+	postal2 := gimei.NewPostalCode()
+
+	if postal1.Kanji() != postal2.Kanji() {
+		t.Fatal("NewPostalCode should be deterministic with same seed")
 	}
 }

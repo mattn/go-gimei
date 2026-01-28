@@ -8,19 +8,21 @@ import (
 	"sync"
 	"time"
 
-	"gopkg.in/yaml.v2"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
+	"gopkg.in/yaml.v2"
 )
 
 var (
-	//go:embed data/addresses.yml data/names.yml
+	//go:embed data/addresses.yml data/names.yml data/postalcodes.yml
 	assets embed.FS
 
 	names       name
 	addresses   address
+	postalCodes postalCode
 	onceName    sync.Once
 	onceAddress sync.Once
+	oncePostal  sync.Once
 	r           *rand.Rand
 	mu          sync.Mutex
 )
@@ -338,6 +340,11 @@ type address struct {
 	} `yaml:"addresses"`
 }
 
+// postalCode store data structure for postal codes
+type postalCode struct {
+	PostalCodes []Item `yaml:"postal_codes"`
+}
+
 // Address store address that is pointed by prefecture/city/town.
 type Address struct {
 	Prefecture Item
@@ -352,6 +359,15 @@ func loadAddresses() {
 		}
 	}
 	panic("failed to load addresses data")
+}
+
+func loadPostalCodes() {
+	if b, err := assets.ReadFile("data/postalcodes.yml"); err == nil {
+		if err = yaml.Unmarshal(b, &postalCodes); err == nil {
+			return
+		}
+	}
+	panic("failed to load postal codes data")
 }
 
 // String implement Stringer.
@@ -450,9 +466,36 @@ func FindAddressByKatakana(katakana string) *Address {
 	return findAddressByIndex(katakana, 2)
 }
 
+// PostalCode store postal code
+type PostalCode struct {
+	Code Item
+}
+
+// String implement Stringer.
+func (p *PostalCode) String() string {
+	return p.Kanji()
+}
+
+// Kanji return string of PostalCode as kanji.
+func (p *PostalCode) Kanji() string {
+	return p.Code.Kanji()
+}
+
+// NewPostalCode return new instance of postal code.
+func NewPostalCode() *PostalCode {
+	mu.Lock()
+	defer mu.Unlock()
+
+	oncePostal.Do(loadPostalCodes)
+	return &PostalCode{
+		Code: postalCodes.PostalCodes[r.Int()%len(postalCodes.PostalCodes)],
+	}
+}
+
 func CountData() string {
 	onceName.Do(loadNames)
 	onceAddress.Do(loadAddresses)
+	oncePostal.Do(loadPostalCodes)
 
 	var addr = &addresses.Addresses
 	return fmt.Sprintf(`FirstName:
@@ -462,7 +505,9 @@ LastName:     %5d
 Adresses:
   Prefecture: %5d
   City:       %5d
-  Town:       %5d`,
+  Town:       %5d
+PostalCodes: %5d`,
 		len(names.FirstName.Male), len(names.FirstName.Female), len(names.LastName),
-		len(addr.Prefecture), len(addr.City), len(addr.Town))
+		len(addr.Prefecture), len(addr.City), len(addr.Town),
+		len(postalCodes.PostalCodes))
 }

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"flag"
 	"fmt"
 	"os"
@@ -85,13 +86,24 @@ func doAddress(address *gimei.Address, arg string) string {
 	}
 }
 
+func doPostalCode(postalCode *gimei.PostalCode, arg string) string {
+	switch arg {
+	case "kanji":
+		return postalCode.Kanji() // 060-0001
+	default:
+		return postalCode.String() // 060-0001
+	}
+}
+
 func main() {
 	var sep string
 	var count bool
+	var jsonOutput bool
 	var n int
 	flag.IntVar(&n, "n", 1, "N records")
 	flag.StringVar(&sep, "sep", ", ", "separator")
 	flag.BoolVar(&count, "count", false, "")
+	flag.BoolVar(&jsonOutput, "json", false, "output as JSON array")
 	flag.Usage = func() {
 		fmt.Fprintf(os.Stderr, `Usage: gimei [OPTIONS] [ARGS]
 
@@ -101,6 +113,8 @@ func main() {
         display number record(s)
   -count
         display records read from embedded yaml files and exit
+  -json
+        output as JSON array
   -h, -help
         display this usage and exit
 
@@ -141,11 +155,15 @@ func main() {
     town-hiragana
     town-katakana
 
+  Arguments for postal code:
+    name
+    kanji
+
   Example:
-    $ gimei -n 3 name:name name:hiragana address:name
-    鈴木 真里緒, すずき まりお, 山口県新居浜市森川町
-    宮原 秋南, みやはら あきな, 大阪府枝幸郡浜頓別町豊郷
-    大内 亮佳, おおうち あきか, 福島県磯城郡田原本町高清水上佐野
+    $ gimei -n 3 name:name name:hiragana address:name postal:name
+    鈴木 真里緒, すずき まりお, 山口県新居浜市森川町, 060-0001
+    宮原 秋南, みやはら あきな, 大阪府枝幸郡浜頓別町豊郷, 100-0005
+    大内 亮佳, おおうち あきか, 福島県磯城郡田原本町高清水上佐野, 150-0008
 `)
 	}
 	flag.Parse()
@@ -160,61 +178,146 @@ func main() {
 		args = []string{"name:name"}
 	}
 
-	for i := 0; i < n; i++ {
-		var (
-			gimeiName, gimeiMale, gimeiFemale *gimei.Name    = nil, nil, nil
-			gimeiAddress                      *gimei.Address = nil
-			gimeiDog, gimeiCat                *gimei.Name    = nil, nil
-		)
-		for i, arg := range args {
-			tokens := strings.SplitN(arg, ":", 2)
-			if len(tokens) == 0 {
-				flag.Usage()
-				os.Exit(2)
-			} else if len(tokens) == 1 {
-				tokens = append(tokens, "name")
+	if jsonOutput {
+		var allRecords []map[string]string
+		for i := 0; i < n; i++ {
+			var (
+				gimeiName, gimeiMale, gimeiFemale *gimei.Name       = nil, nil, nil
+				gimeiAddress                      *gimei.Address    = nil
+				gimeiPostalCode                   *gimei.PostalCode = nil
+				gimeiDog, gimeiCat                *gimei.Name       = nil, nil
+			)
+			record := make(map[string]string)
+			for _, arg := range args {
+				tokens := strings.SplitN(arg, ":", 2)
+				if len(tokens) == 0 {
+					flag.Usage()
+					os.Exit(2)
+				} else if len(tokens) == 1 {
+					tokens = append(tokens, "name")
+				}
+				var result string
+				var fieldName string
+				switch tokens[0] {
+				case "name":
+					if gimeiName == nil {
+						gimeiName = gimei.NewName()
+					}
+					result = doName(gimeiName, tokens[1])
+					fieldName = "name"
+				case "male":
+					if gimeiMale == nil {
+						gimeiMale = gimei.NewMale()
+					}
+					result = doName(gimeiMale, tokens[1])
+					fieldName = "male"
+				case "female":
+					if gimeiFemale == nil {
+						gimeiFemale = gimei.NewFemale()
+					}
+					result = doName(gimeiFemale, tokens[1])
+					fieldName = "female"
+				case "address":
+					if gimeiAddress == nil {
+						gimeiAddress = gimei.NewAddress()
+					}
+					result = doAddress(gimeiAddress, tokens[1])
+					fieldName = "address"
+				case "postal":
+					if gimeiPostalCode == nil {
+						gimeiPostalCode = gimei.NewPostalCode()
+					}
+					result = doPostalCode(gimeiPostalCode, tokens[1])
+					fieldName = "postal"
+				case "dog":
+					if gimeiDog == nil {
+						gimeiDog = gimei.NewDog()
+					}
+					result = doName(gimeiDog, tokens[1])
+					fieldName = "dog"
+				case "cat":
+					if gimeiCat == nil {
+						gimeiCat = gimei.NewCat()
+					}
+					result = doName(gimeiCat, tokens[1])
+					fieldName = "cat"
+				default:
+					flag.Usage()
+					os.Exit(2)
+				}
+				record[fieldName] = result
 			}
-			var result string
-			switch tokens[0] {
-			case "name":
-				if gimeiName == nil {
-					gimeiName = gimei.NewName()
-				}
-				result = doName(gimeiName, tokens[1])
-			case "male":
-				if gimeiMale == nil {
-					gimeiMale = gimei.NewMale()
-				}
-				result = doName(gimeiMale, tokens[1])
-			case "female":
-				if gimeiFemale == nil {
-					gimeiFemale = gimei.NewFemale()
-				}
-				result = doName(gimeiFemale, tokens[1])
-			case "address":
-				if gimeiAddress == nil {
-					gimeiAddress = gimei.NewAddress()
-				}
-				result = doAddress(gimeiAddress, tokens[1])
-			case "dog":
-				if gimeiDog == nil {
-					gimeiDog = gimei.NewDog()
-				}
-				result = doName(gimeiDog, tokens[1])
-			case "cat":
-				if gimeiCat == nil {
-					gimeiCat = gimei.NewCat()
-				}
-				result = doName(gimeiCat, tokens[1])
-			default:
-				flag.Usage()
-				os.Exit(2)
-			}
-			if i > 0 {
-				fmt.Print(sep)
-			}
-			fmt.Print(result)
+			allRecords = append(allRecords, record)
 		}
-		fmt.Println()
+		jsonData, err := json.Marshal(allRecords)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Error generating JSON: %v\n", err)
+			os.Exit(1)
+		}
+		fmt.Println(string(jsonData))
+	} else {
+		for i := 0; i < n; i++ {
+			var (
+				gimeiName, gimeiMale, gimeiFemale *gimei.Name       = nil, nil, nil
+				gimeiAddress                      *gimei.Address    = nil
+				gimeiPostalCode                   *gimei.PostalCode = nil
+				gimeiDog, gimeiCat                *gimei.Name       = nil, nil
+			)
+			for i, arg := range args {
+				tokens := strings.SplitN(arg, ":", 2)
+				if len(tokens) == 0 {
+					flag.Usage()
+					os.Exit(2)
+				} else if len(tokens) == 1 {
+					tokens = append(tokens, "name")
+				}
+				var result string
+				switch tokens[0] {
+				case "name":
+					if gimeiName == nil {
+						gimeiName = gimei.NewName()
+					}
+					result = doName(gimeiName, tokens[1])
+				case "male":
+					if gimeiMale == nil {
+						gimeiMale = gimei.NewMale()
+					}
+					result = doName(gimeiMale, tokens[1])
+				case "female":
+					if gimeiFemale == nil {
+						gimeiFemale = gimei.NewFemale()
+					}
+					result = doName(gimeiFemale, tokens[1])
+				case "address":
+					if gimeiAddress == nil {
+						gimeiAddress = gimei.NewAddress()
+					}
+					result = doAddress(gimeiAddress, tokens[1])
+				case "postal":
+					if gimeiPostalCode == nil {
+						gimeiPostalCode = gimei.NewPostalCode()
+					}
+					result = doPostalCode(gimeiPostalCode, tokens[1])
+				case "dog":
+					if gimeiDog == nil {
+						gimeiDog = gimei.NewDog()
+					}
+					result = doName(gimeiDog, tokens[1])
+				case "cat":
+					if gimeiCat == nil {
+						gimeiCat = gimei.NewCat()
+					}
+					result = doName(gimeiCat, tokens[1])
+				default:
+					flag.Usage()
+					os.Exit(2)
+				}
+				if i > 0 {
+					fmt.Print(sep)
+				}
+				fmt.Print(result)
+			}
+			fmt.Println()
+		}
 	}
 }
