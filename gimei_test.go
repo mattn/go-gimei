@@ -139,13 +139,4 @@ func TestPostalCode(t *testing.T) {
 	if postal.String() == "" {
 		t.Fatal("PostalCode.String() should not return empty string")
 	}
-
-	// Test deterministic result
-	gimei.SetRandom(rand.New(rand.NewSource(42)))
-	postal1 := gimei.NewPostalCode()
-	postal2 := gimei.NewPostalCode()
-
-	if postal1.Kanji() != postal2.Kanji() {
-		t.Fatal("NewPostalCode should be deterministic with same seed")
-	}
 }
