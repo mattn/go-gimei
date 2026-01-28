@@ -95,15 +95,24 @@ func doPostalCode(postalCode *gimei.PostalCode, arg string) string {
 	}
 }
 
+const (
+	name    = "gimei"
+	version = "0.0.0"
+)
+
+var revision = "HEAD"
+
 func main() {
 	var sep string
 	var count bool
 	var jsonOutput bool
+	var showVersion bool
 	var n int
 	flag.IntVar(&n, "n", 1, "N records")
 	flag.StringVar(&sep, "sep", ", ", "separator")
 	flag.BoolVar(&count, "count", false, "")
 	flag.BoolVar(&jsonOutput, "json", false, "output as JSON array")
+	flag.BoolVar(&showVersion, "v", false, "show version")
 	flag.Usage = func() {
 		fmt.Fprintf(os.Stderr, `Usage: gimei [OPTIONS] [ARGS]
 
@@ -117,6 +126,8 @@ func main() {
         output as JSON array
   -h, -help
         display this usage and exit
+  -v
+        show version
 
   Arguments for name/male/female:
     name
@@ -167,6 +178,11 @@ func main() {
 `)
 	}
 	flag.Parse()
+
+	if showVersion {
+		fmt.Println(version)
+		return
+	}
 
 	if count {
 		fmt.Println(gimei.CountData())
