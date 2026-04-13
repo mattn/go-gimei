@@ -25,6 +25,12 @@ var (
 	oncePostal  sync.Once
 	r           *rand.Rand
 	mu          sync.Mutex
+
+	lastNameIndex        [4]map[string]Item
+	maleFirstNameIndex   [4]map[string]Item
+	femaleFirstNameIndex [4]map[string]Item
+	cityIndex            [3]map[string]Item
+	townIndex            [3]map[string]Item
 )
 
 // Item take four figure for japanese. Kanji/Hiragana/Katakana/Romaji.
@@ -110,10 +116,52 @@ func SetRandom(rnd *rand.Rand) {
 func loadNames() {
 	if b, err := assets.ReadFile("data/names.yml"); err == nil {
 		if err = yaml.Unmarshal(b, &names); err == nil {
+			buildNameIndex()
 			return
 		}
 	}
 	panic("failed to load names data")
+}
+
+func buildNameIndex() {
+	for i := 0; i < 4; i++ {
+		lastNameIndex[i] = make(map[string]Item, len(names.LastName))
+		for _, item := range names.LastName {
+			if i < len(item) {
+				key := item[i]
+				if i == 3 {
+					key = strings.ToLower(key)
+				}
+				if _, ok := lastNameIndex[i][key]; !ok {
+					lastNameIndex[i][key] = item
+				}
+			}
+		}
+		maleFirstNameIndex[i] = make(map[string]Item, len(names.FirstName.Male))
+		for _, item := range names.FirstName.Male {
+			if i < len(item) {
+				key := item[i]
+				if i == 3 {
+					key = strings.ToLower(key)
+				}
+				if _, ok := maleFirstNameIndex[i][key]; !ok {
+					maleFirstNameIndex[i][key] = item
+				}
+			}
+		}
+		femaleFirstNameIndex[i] = make(map[string]Item, len(names.FirstName.Female))
+		for _, item := range names.FirstName.Female {
+			if i < len(item) {
+				key := item[i]
+				if i == 3 {
+					key = strings.ToLower(key)
+				}
+				if _, ok := femaleFirstNameIndex[i][key]; !ok {
+					femaleFirstNameIndex[i][key] = item
+				}
+			}
+		}
+	}
 }
 
 // String implement Stringer.
@@ -157,16 +205,16 @@ func NewName() *Name {
 	defer mu.Unlock()
 
 	onceName.Do(loadNames)
-	if r.Int()%2 == 0 {
+	if r.Intn(2) == 0 {
 		return &Name{
-			First: names.FirstName.Male[r.Int()%len(names.FirstName.Male)],
-			Last:  names.LastName[r.Int()%len(names.LastName)],
+			First: names.FirstName.Male[r.Intn(len(names.FirstName.Male))],
+			Last:  names.LastName[r.Intn(len(names.LastName))],
 			Sex:   Male,
 		}
 	} else {
 		return &Name{
-			First: names.FirstName.Female[r.Int()%len(names.FirstName.Female)],
-			Last:  names.LastName[r.Int()%len(names.LastName)],
+			First: names.FirstName.Female[r.Intn(len(names.FirstName.Female))],
+			Last:  names.LastName[r.Intn(len(names.LastName))],
 			Sex:   Female,
 		}
 	}
@@ -179,8 +227,8 @@ func NewDog() *Name {
 
 	onceName.Do(loadNames)
 	return &Name{
-		First: names.FirstName.Animal[r.Int()%len(names.FirstName.Animal)],
-		Last:  names.LastNameDog[r.Int()%len(names.LastNameDog)],
+		First: names.FirstName.Animal[r.Intn(len(names.FirstName.Animal))],
+		Last:  names.LastNameDog[r.Intn(len(names.LastNameDog))],
 	}
 }
 
@@ -191,8 +239,8 @@ func NewCat() *Name {
 
 	onceName.Do(loadNames)
 	return &Name{
-		First: names.FirstName.Animal[r.Int()%len(names.FirstName.Animal)],
-		Last:  names.LastNameCat[r.Int()%len(names.LastNameCat)],
+		First: names.FirstName.Animal[r.Intn(len(names.FirstName.Animal))],
+		Last:  names.LastNameCat[r.Intn(len(names.LastNameCat))],
 	}
 }
 
@@ -203,8 +251,8 @@ func NewMale() *Name {
 
 	onceName.Do(loadNames)
 	return &Name{
-		First: names.FirstName.Male[r.Int()%len(names.FirstName.Male)],
-		Last:  names.LastName[r.Int()%len(names.LastName)],
+		First: names.FirstName.Male[r.Intn(len(names.FirstName.Male))],
+		Last:  names.LastName[r.Intn(len(names.LastName))],
 		Sex:   Male,
 	}
 }
@@ -216,8 +264,8 @@ func NewFemale() *Name {
 
 	onceName.Do(loadNames)
 	return &Name{
-		First: names.FirstName.Female[r.Int()%len(names.FirstName.Female)],
-		Last:  names.LastName[r.Int()%len(names.LastName)],
+		First: names.FirstName.Female[r.Intn(len(names.FirstName.Female))],
+		Last:  names.LastName[r.Intn(len(names.LastName))],
 		Sex:   Female,
 	}
 }
@@ -229,8 +277,8 @@ func NewMaleDog() *Name {
 
 	onceName.Do(loadNames)
 	return &Name{
-		First: names.FirstName.Male[r.Int()%len(names.FirstName.Male)],
-		Last:  names.LastNameDog[r.Int()%len(names.LastNameDog)],
+		First: names.FirstName.Male[r.Intn(len(names.FirstName.Male))],
+		Last:  names.LastNameDog[r.Intn(len(names.LastNameDog))],
 		Sex:   Male,
 	}
 }
@@ -242,8 +290,8 @@ func NewFemaleDog() *Name {
 
 	onceName.Do(loadNames)
 	return &Name{
-		First: names.FirstName.Female[r.Int()%len(names.FirstName.Female)],
-		Last:  names.LastNameDog[r.Int()%len(names.LastNameDog)],
+		First: names.FirstName.Female[r.Intn(len(names.FirstName.Female))],
+		Last:  names.LastNameDog[r.Intn(len(names.LastNameDog))],
 		Sex:   Female,
 	}
 }
@@ -255,8 +303,8 @@ func NewMaleCat() *Name {
 
 	onceName.Do(loadNames)
 	return &Name{
-		First: names.FirstName.Male[r.Int()%len(names.FirstName.Male)],
-		Last:  names.LastNameCat[r.Int()%len(names.LastNameCat)],
+		First: names.FirstName.Male[r.Intn(len(names.FirstName.Male))],
+		Last:  names.LastNameCat[r.Intn(len(names.LastNameCat))],
 		Sex:   Male,
 	}
 }
@@ -268,8 +316,8 @@ func NewFemaleCat() *Name {
 
 	onceName.Do(loadNames)
 	return &Name{
-		First: names.FirstName.Female[r.Int()%len(names.FirstName.Female)],
-		Last:  names.LastNameCat[r.Int()%len(names.LastNameCat)],
+		First: names.FirstName.Female[r.Intn(len(names.FirstName.Female))],
+		Last:  names.LastNameCat[r.Intn(len(names.LastNameCat))],
 		Sex:   Female,
 	}
 }
@@ -280,33 +328,19 @@ func findNameByIndex(n string, i int) *Name {
 	if len(token) != 2 {
 		return nil
 	}
+	lastKey, firstKey := token[0], token[1]
 	if i == 3 { // by romaji
-		token[0], token[1] = strings.ToLower(token[1]), strings.ToLower(token[0])
+		lastKey, firstKey = strings.ToLower(token[1]), strings.ToLower(token[0])
 	}
-	for _, last := range names.LastName {
-		if last[i] != token[0] {
-			continue
-		}
-		for _, first := range names.FirstName.Male {
-			if first[i] != token[1] {
-				continue
-			}
-			return &Name{
-				First: first,
-				Last:  last,
-				Sex:   Male,
-			}
-		}
-		for _, first := range names.FirstName.Female {
-			if first[i] != token[1] {
-				continue
-			}
-			return &Name{
-				First: first,
-				Last:  last,
-				Sex:   Female,
-			}
-		}
+	last, ok := lastNameIndex[i][lastKey]
+	if !ok {
+		return nil
+	}
+	if first, ok := maleFirstNameIndex[i][firstKey]; ok {
+		return &Name{First: first, Last: last, Sex: Male}
+	}
+	if first, ok := femaleFirstNameIndex[i][firstKey]; ok {
+		return &Name{First: first, Last: last, Sex: Female}
 	}
 	return nil
 }
@@ -355,10 +389,28 @@ type Address struct {
 func loadAddresses() {
 	if b, err := assets.ReadFile("data/addresses.yml"); err == nil {
 		if err = yaml.Unmarshal(b, &addresses); err == nil {
+			buildAddressIndex()
 			return
 		}
 	}
 	panic("failed to load addresses data")
+}
+
+func buildAddressIndex() {
+	for i := 0; i < 3; i++ {
+		cityIndex[i] = make(map[string]Item, len(addresses.Addresses.City))
+		for _, item := range addresses.Addresses.City {
+			if _, ok := cityIndex[i][item[i]]; !ok {
+				cityIndex[i][item[i]] = item
+			}
+		}
+		townIndex[i] = make(map[string]Item, len(addresses.Addresses.Town))
+		for _, item := range addresses.Addresses.Town {
+			if _, ok := townIndex[i][item[i]]; !ok {
+				townIndex[i][item[i]] = item
+			}
+		}
+	}
 }
 
 func loadPostalCodes() {
@@ -405,7 +457,7 @@ func NewPrefecture() Item {
 	defer mu.Unlock()
 
 	onceAddress.Do(loadAddresses)
-	return addresses.Addresses.Prefecture[r.Int()%len(addresses.Addresses.Prefecture)]
+	return addresses.Addresses.Prefecture[r.Intn(len(addresses.Addresses.Prefecture))]
 }
 
 // NewTown return new instance of town.
@@ -414,7 +466,7 @@ func NewTown() Item {
 	defer mu.Unlock()
 
 	onceAddress.Do(loadAddresses)
-	return addresses.Addresses.Town[r.Int()%len(addresses.Addresses.Town)]
+	return addresses.Addresses.Town[r.Intn(len(addresses.Addresses.Town))]
 }
 
 // NewCity return new instance of city.
@@ -423,28 +475,30 @@ func NewCity() Item {
 	defer mu.Unlock()
 
 	onceAddress.Do(loadAddresses)
-	return addresses.Addresses.City[r.Int()%len(addresses.Addresses.City)]
+	return addresses.Addresses.City[r.Intn(len(addresses.Addresses.City))]
 }
 
 func findAddressByIndex(a string, i int) *Address {
 	onceAddress.Do(loadAddresses)
 	for _, prefecture := range addresses.Addresses.Prefecture {
-		if !strings.HasPrefix(a, prefecture[i]) {
+		pref := prefecture[i]
+		if !strings.HasPrefix(a, pref) {
 			continue
 		}
-		for _, city := range addresses.Addresses.City {
-			if !strings.HasPrefix(a, prefecture[i]+city[i]) {
+		rest := a[len(pref):]
+		for k := 1; k < len(rest); k++ {
+			city, okC := cityIndex[i][rest[:k]]
+			if !okC {
 				continue
 			}
-			for _, town := range addresses.Addresses.Town {
-				if a != prefecture[i]+city[i]+town[i] {
-					continue
-				}
-				return &Address{
-					Prefecture: prefecture,
-					City:       city,
-					Town:       town,
-				}
+			town, okT := townIndex[i][rest[k:]]
+			if !okT {
+				continue
+			}
+			return &Address{
+				Prefecture: prefecture,
+				City:       city,
+				Town:       town,
 			}
 		}
 	}
@@ -488,7 +542,7 @@ func NewPostalCode() *PostalCode {
 
 	oncePostal.Do(loadPostalCodes)
 	return &PostalCode{
-		Code: postalCodes.PostalCodes[r.Int()%len(postalCodes.PostalCodes)],
+		Code: postalCodes.PostalCodes[r.Intn(len(postalCodes.PostalCodes))],
 	}
 }
 
