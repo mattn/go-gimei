@@ -502,7 +502,7 @@ func CountData() string {
   Male:       %5d 
   Female:     %5d
 LastName:     %5d
-Adresses:
+Addresses:
   Prefecture: %5d
   City:       %5d
   Town:       %5d
